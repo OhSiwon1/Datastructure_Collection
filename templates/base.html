@@ -1,0 +1,39 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <title>DS</title>
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="{% url 'main' %}" class="navbar-brand d-flex align-items-center">
+              <strong>크로플</strong>
+            </a>
+            
+            {% if user.is_authenticated %}
+            <a href="{% url 'common:logout' %}"><button class="btn btn-outline-light my-2 my-sm-0">sign out</button></a>
+            {% else %}
+            <div>
+            <a href="{% url 'common:login' %}"><button class="btn btn-outline-light my-2 my-sm-0">sign up</button></a>
+            <a href="{% url 'common:signup' %}"><button class="btn btn-outline-light my-2 my-sm-0">sign in</button></a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+    </header>
+<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+{% block content %}
+{% endblock %}
+<!-- 기본 템플릿 안에 삽입될 내용 End -->
+</body>
+</html>
