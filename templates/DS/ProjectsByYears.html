@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if project_list %}
+    <ul>
+    {% for project in project_list %}
+        <li><a href="/{{ project.id }}/">{{ project.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>질문이 없습니다.</p>
+{% endif %}
+
+
+{% endblock %}

@@ -21,10 +21,10 @@
             </a>
             
             {% if user.is_authenticated %}
-            <a href="{% url 'common:logout' %}"><button class="btn btn-outline-light my-2 my-sm-0">sign out</button></a>
+            <a href="{% url 'common:logout' %}"><button class="btn btn-outline-light my-2 my-sm-0">sign out ({{user.username}})</button></a>
             {% else %}
             <div>
-            <a href="{% url 'common:login' %}"><button class="btn btn-outline-light my-2 my-sm-0">sign up</button></a>
+            <a href="{% url 'common:login' %}"><button class="btn btn-outline-light my-2 my-sm-0">log in</button></a>
             <a href="{% url 'common:signup' %}"><button class="btn btn-outline-light my-2 my-sm-0">sign in</button></a>
             </div>
             {% endif %}
