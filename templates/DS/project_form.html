@@ -4,35 +4,20 @@
     <h5 class="my-3 border-bottom pb-2">프로젝트 등록</h5>
     <form method="post">
         {% csrf_token %}
-        <!-- 오류표시 Start -->
-        {% if form.errors %}
-        <div class="alert alert-danger" role="alert">
-            {% for field in form %}
-            {% if field.errors %}
-            <div>
-                <strong>{{ field.label }}</strong>
-                {{ field.errors }}
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-        {% endif %}
-        <!-- 오류표시 End -->
-        <div class="mb-3">
-            <label for="title" class="form-label">제목</label>
-            <input type="text" class="form-control" name="title" id="title"
-                   value="{{ form.title.value|default_if_none:'' }}">
-        </div>
-        <div class="mb-3">
-            <label for="content" class="form-label">내용</label>
-            <textarea class="form-control" name="content"
-                      id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
-        </div>
-        <div class="mb-3">
-            <label for="content" class="form-label">비디오</label>
-            <textarea class="form-control" name="video"
-                      id="video" rows="10">{{ form.video.value|default_if_none:'' }}</textarea>
-        </div>
+        <p><label for="id_title">Title:</label> <input type="text" name="title" maxlength="100" required id="id_title"></p>
+        <p><label for="id_content">Content:</label> <textarea name="content" cols="40" rows="10" required id="id_content">
+        </textarea></p>
+        <p><label for="id_video">Video:</label> <input type="url" name="video" maxlength="200" required id="id_video"></p>
+        <p><label for="id_year">Year:</label> <select name="year" required id="id_year">
+          <option value="" selected>---------</option>
+        
+          <option value="1">2023-1</option>
+        
+          <option value="2">2023-2</option>
+        
+          <option value="3">2024-1</option>
+        
+        </select></p>
         <button type="submit" class="btn btn-primary">저장하기</button>
 
     </form>

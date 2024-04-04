@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% if project_list %}
+<h1>{{ year.year }}</h1>
+<h5>{{ year.project_set.count }}개의 답변이 있습니다.</h5>
+<div>
     <ul>
-    {% for project in project_list %}
-        <li><a href="/{{ project.id }}/">{{ project.title }}</a></li>
+    {% for project in year.project_set.all %}
+        <li>{{ project.title }}</li>
     {% endfor %}
     </ul>
-{% else %}
-    <p>질문이 없습니다.</p>
-{% endif %}
+</div>
 
 
 {% endblock %}

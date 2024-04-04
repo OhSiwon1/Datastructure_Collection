@@ -6,8 +6,11 @@
 <main>
   <div class="album py-5 bg-light">
     <div class="container">
+      {% for year in year_list %}
+      <p>{{year.year}}</p>
+      <a href="byyears/{{ year.id }}/" class="btn btn-sm btn-outline-secondary">{{year.year}}</a>
       <div class="row row-cols-3">
-        {% for project in project_list %}
+        {% for project in year.project_set.all %}
         <div class="col">
           <div class="card shadow-sm">
             <div class="card-body">
@@ -23,8 +26,8 @@
           </div>
         </div>
         {% endfor %}
-
       </div>
+      {% endfor %}
     </div>
   </div>
 
