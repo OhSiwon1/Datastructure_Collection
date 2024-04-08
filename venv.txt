@@ -1,1 +1,1 @@
-C:\python_venv\webvenv\Scripts
+C:\python_venv\webvenv\Scripts\activate

@@ -10,10 +10,11 @@ class Year(models.Model):
 class Project(models.Model):
     title=models.CharField(max_length=100)
     content=models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_project')
     year=models.ForeignKey(Year,on_delete=models.CASCADE)
     #upload = models.FileField(upload_to='uploads/')
-    #harts = ??
+    harts = models.ManyToManyField(User, related_name='hart_project')  # 추천인 추가
+
     
     video=models.URLField()
 

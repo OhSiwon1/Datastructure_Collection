@@ -1,25 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
+    <!-- message 표시 -->
+    {% if messages %}
+    <div class="alert alert-danger my-3" role="alert">
+    {% for message in messages %}
+        <strong>{{ message.tags }}</strong>
+        <ul><li>{{ message.message }}</li></ul>
+    {% endfor %}
+    </div>
+    {% endif %}
 <div class="container">
     <h5 class="my-3 border-bottom pb-2">프로젝트 등록</h5>
     <form method="post">
         {% csrf_token %}
-        <p><label for="id_title">Title:</label> <input type="text" name="title" maxlength="100" required id="id_title"></p>
-        <p><label for="id_content">Content:</label> <textarea name="content" cols="40" rows="10" required id="id_content">
-        </textarea></p>
-        <p><label for="id_video">Video:</label> <input type="url" name="video" maxlength="200" required id="id_video"></p>
+		<p><label for="id_title">Title:</label> <input type="text" name="title" value="{{project.title}}" maxlength="100" required id="id_title"></p>
+        <p><label for="id_content">Content:</label> <textarea name="content" cols="40" rows="10" required id="id_content">{{project.content}}</textarea></p>
+        <p><label for="id_video">Video:</label> <input type="url" name="video" value="{{project.video}}" maxlength="200" required id="id_video"></p>
         <p><label for="id_year">Year:</label> <select name="year" required id="id_year">
-          <option value="" selected>---------</option>
-        
-          <option value="1">2023-1</option>
-        
-          <option value="2">2023-2</option>
-        
-          <option value="3">2024-1</option>
-        
-        </select></p>
+
+        <option value="">---------</option>
+
+        <option value="1">2023-1</option>
+
+        <option value="2">2023-2</option>
+
+        <option value="3" selected>2024-1</option>       
+        </select>
+    
         <button type="submit" class="btn btn-primary">저장하기</button>
 
     </form>
 </div>
+
 {% endblock %}

@@ -1,15 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{ year.year }}</h1>
-<h5>{{ year.project_set.count }}개의 답변이 있습니다.</h5>
-<div>
-    <ul>
-    {% for project in year.project_set.all %}
-        <li>{{ project.title }}</li>
-    {% endfor %}
-    </ul>
-</div>
-
+<div class="album py-5 bg-light">
+    <div class="container">
+      <h1>{{ year.year }}</h1>
+      <div class="row row-cols-3">
+        {% for project in year.project_set.all %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <p class="card-text">{{ project.title }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>{{project.author.username}} ({{project.author.number}})</div>
+                <div class="btn-group">
+                  <a href="/{{ project.id }}/" class="btn btn-sm btn-outline-secondary">View</a>
+                  {% if request.user == project.author %}
+                  <a href="{% url 'project_modify' project.id  %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                  <a href="javascript:void(0)" onclick="del(this)" class="delete btn btn-sm btn-outline-secondary"
+                  data-uri="{% url 'project_delete' project.id %}">delete</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
 
 {% endblock %}

@@ -1,37 +1,90 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<a href="{% url 'project_create' %}" class="btn btn-primary">프로젝트 등록하기</a>
-
 <main>
   <div class="album py-5 bg-light">
     <div class="container">
-      {% for year in year_list %}
-      <p>{{year.year}}</p>
-      <a href="byyears/{{ year.id }}/" class="btn btn-sm btn-outline-secondary">{{year.year}}</a>
+      <p>2023-1</p>
+      <a href="byyears/1/" class="btn btn-sm btn-outline-secondary">2023-1</a>
       <div class="row row-cols-3">
-        {% for project in year.project_set.all %}
+        {% for project in year1 %}
         <div class="col">
           <div class="card shadow-sm">
             <div class="card-body">
               <p class="card-text">{{ project.title }}</p>
               <div class="d-flex justify-content-between align-items-center">
+                <div>{{project.author.username}} ({{project.author.number}})</div>
                 <div class="btn-group">
                   <a href="/{{ project.id }}/" class="btn btn-sm btn-outline-secondary">View</a>
-                  <a class="btn btn-sm btn-outline-secondary">Edit</a>
+                  {% if request.user == project.author %}
+                  <a href="{% url 'project_modify' project.id  %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                  <a href="javascript:void(0)" onclick="del(this)" class="delete btn btn-sm btn-outline-secondary"
+                  data-uri="{% url 'project_delete' project.id %}">delete</a>
+                  {% endif %}
                 </div>
-                <small class="text-muted">9 mins</small>
               </div>
             </div>
           </div>
         </div>
         {% endfor %}
       </div>
-      {% endfor %}
+
+      <p>2023-2</p>
+      <a href="byyears/2/" class="btn btn-sm btn-outline-secondary">2023-2</a>
+      <div class="row row-cols-3">
+        {% for project in year2 %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <p class="card-text">{{ project.title }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>{{project.author.username}} ({{project.author.number}})</div>
+                <div class="btn-group">
+                  <a href="/{{ project.id }}/" class="btn btn-sm btn-outline-secondary">View</a>
+                  {% if request.user == project.author %}
+                  <a href="{% url 'project_modify' project.id  %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                  <a href="javascript:void(0)" onclick="del(this)" class="delete btn btn-sm btn-outline-secondary"
+                  data-uri="{% url 'project_delete' project.id %}">delete</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <p>2024-1</p>
+      <a href="byyears/3/" class="btn btn-sm btn-outline-secondary">2024-1</a>
+      <div class="row row-cols-3">
+        {% for project in year3 %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <p class="card-text">{{ project.title }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>{{project.author.username}} ({{project.author.number}})</div>
+                <div class="btn-group">
+                  <a href="/{{ project.id }}/" class="btn btn-sm btn-outline-secondary">View</a>
+                  {% if request.user == project.author %}
+                  <a href="{% url 'project_modify' project.id  %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                  <a href="javascript:void(0)" onclick="del(this)" class="delete btn btn-sm btn-outline-secondary"
+                  data-uri="{% url 'project_delete' project.id %}">delete</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+
     </div>
   </div>
-
+  <a href="{% url 'project_create' %}" class="btn btn-primary">프로젝트 등록하기</a>
 </main>
+
 
 <footer class="text-muted py-5">
   <div class="container">
@@ -42,4 +95,15 @@
     <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.1/getting-started/introduction/">getting started guide</a>.</p>
   </div>
 </footer>
+{% endblock %}
+
+{% block script %}
+<script type='text/javascript'>
+
+function del(el) {
+  if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = el.dataset.uri;
+        };
+}
+</script>
 {% endblock %}
