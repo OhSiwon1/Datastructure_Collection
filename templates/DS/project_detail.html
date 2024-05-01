@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load DS_filter %}
-
+<div class="container px-5">
 <h1>{{ project.title }}</h1>
 <div>
     {{ project.content|mark }}
 </div>
 <div>{{project.author.username}} ({{project.author.number}})</div>
+{% if project.imgfile %}
+  <img src="{{ project.imgfile.url }}" width="700">
+{% endif %}
 <h5>{{ project.comment_set.count }}개의 답변이 있습니다.</h5>
 <div>
     <ul>
@@ -58,7 +61,7 @@
          name="content" id="content" class="form-control" rows="10"></textarea>
         <input type="submit" value="댓글작성">
     </form>
-
+</div>
 {% endblock %}
 
 {% block script %}

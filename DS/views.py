@@ -1,13 +1,17 @@
 from django.shortcuts import render,redirect
 from .models import Project, Comment, Year
 from DS.forms import ProjectForm, CommentForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+
+def group_check(user):
+    return user.groups.filter(name='can_make_proj').exists()
+
 
 # Create your views here.
 def main(request):
-    year1=Year.objects.get(id=1).project_set.order_by('-harts')
-    year2=Year.objects.get(id=2).project_set.order_by('-harts')
+    year1=Year.objects.get(id=1).project_set.order_by('-harts')[:3]
+    year2=Year.objects.get(id=2).project_set.order_by('-harts')[:3]
     year3=Year.objects.get(id=3).project_set.order_by('-harts')[:3]
     context1={'year1':year1,'year2':year2,'year3':year3}
     return render(request, 'DS/main.html', context1)
@@ -41,12 +45,13 @@ def comments_create(request,project_id):
     return render(request, 'DS/project_detail.html', context)
 
 @login_required(login_url='common:login')
+@user_passes_test(group_check, login_url='main') #login_url= "로그인해주세요창"
 def project_create(request):
     if request.method =='POST':
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.POST,request.FILES)
         if form.is_valid():
             project=form.save(commit=False)
-            project.author = request.user 
+            project.author = request.user
             project.save()
             return redirect('main')
     else:
@@ -61,7 +66,7 @@ def project_modify(request, project_id):
         messages.error(request, '수정권한이 없습니다')
         return redirect('project_detail', project_id=project.id)
     if request.method == "POST":
-        form = ProjectForm(request.POST, instance=project)
+        form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             form.save()
             return redirect('project_detail', project_id=project.id)

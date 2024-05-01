@@ -1,88 +1,137 @@
 {% extends 'base.html' %}
 {% block content %}
 
+
 <main>
-  <div class="album py-5 bg-light">
+
+  <section class="jumbotron text-center">
     <div class="container">
-      <p>2023-1</p>
-      <a href="byyears/1/" class="btn btn-sm btn-outline-secondary">2023-1</a>
-      <div class="row row-cols-3">
-        {% for project in year1 %}
-        <div class="col">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <p class="card-text">{{ project.title }}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div>{{project.author.username}} ({{project.author.number}})</div>
-                <div class="btn-group">
-                  <a href="/{{ project.id }}/" class="btn btn-sm btn-outline-secondary">View</a>
-                  {% if request.user == project.author %}
-                  <a href="{% url 'project_modify' project.id  %}" class="btn btn-sm btn-outline-secondary">Edit</a>
-                  <a href="javascript:void(0)" onclick="del(this)" class="delete btn btn-sm btn-outline-secondary"
-                  data-uri="{% url 'project_delete' project.id %}">delete</a>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
+      <h1 class="jumbotron-heading">Croffle</h1>
+      <p class="lead text">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
+    </div>
+  </section>
 
-      <p>2023-2</p>
-      <a href="byyears/2/" class="btn btn-sm btn-outline-secondary">2023-2</a>
-      <div class="row row-cols-3">
-        {% for project in year2 %}
-        <div class="col">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <p class="card-text">{{ project.title }}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div>{{project.author.username}} ({{project.author.number}})</div>
-                <div class="btn-group">
-                  <a href="/{{ project.id }}/" class="btn btn-sm btn-outline-secondary">View</a>
-                  {% if request.user == project.author %}
-                  <a href="{% url 'project_modify' project.id  %}" class="btn btn-sm btn-outline-secondary">Edit</a>
-                  <a href="javascript:void(0)" onclick="del(this)" class="delete btn btn-sm btn-outline-secondary"
-                  data-uri="{% url 'project_delete' project.id %}">delete</a>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
 
-      <p>2024-1</p>
-      <a href="byyears/3/" class="btn btn-sm btn-outline-secondary">2024-1</a>
-      <div class="row row-cols-3">
-        {% for project in year3 %}
-        <div class="col">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <p class="card-text">{{ project.title }}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div>{{project.author.username}} ({{project.author.number}})</div>
-                <div class="btn-group">
-                  <a href="/{{ project.id }}/" class="btn btn-sm btn-outline-secondary">View</a>
-                  {% if request.user == project.author %}
-                  <a href="{% url 'project_modify' project.id  %}" class="btn btn-sm btn-outline-secondary">Edit</a>
-                  <a href="javascript:void(0)" onclick="del(this)" class="delete btn btn-sm btn-outline-secondary"
-                  data-uri="{% url 'project_delete' project.id %}">delete</a>
-                  {% endif %}
+
+  <div class="album py-5 bg-light">
+    <div class="container px-2">
+
+      <div class="row">
+        <div class="col-8">
+          <div class="mb-4">
+            <div class="p-1 mb-4 bg-dark text-white rounded-pill">
+              +2023-1
+              <a href="byyears/1/" class="btn btn-sm btn-outline-secondary" style="float: right">2023-1</a>
+            </div>
+            <div class="container px-2">
+              <div class="row row-cols-1 row-cols-md-3">
+                {% for project in year1 %}
+                <div class="col-mb-4">
+                  <div class="card">
+                    {% if project.imgfile %}
+                    <img class="card-img-top" src="{{ project.imgfile.url }}" style="height: 200px; width: 100%;">
+                    {% else %}
+                    <img class="card-img-top" data-src="" style="height: 200px; width: 100%;">
+                    {% endif %}
+                    <div class="card-body" style="height: 150px;">
+                      <a href="/{{ project.id }}/">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                      </a>
+                      <p class = "card-text">이 프로젝트에 대한 설명. 이건 두줄 정도는 채워야 되지 않나 3줄이 맞을라나.</p>
+                    </div>
+                    <div class="card-footer">
+                      {{project.author.username}} ({{project.author.number}})
+                        <div style="float: right;">
+                          {{project.harts.count}}
+                          <img src="media/heart.svg" style="height: 25px; width: 25px;">
+                        </div>
+                    </div>
+                  </div>
                 </div>
+                {% endfor %}
               </div>
             </div>
           </div>
+          <div class="mb-4">
+            <div class="p-1 mb-4 bg-dark text-white rounded-pill">
+              +2023-2
+              <a href="byyears/2/" class="btn btn-sm btn-outline-secondary" style="float: right">2023-2</a>
+            </div>
+            <div class="container px-2">
+              <div class="row row-cols-1 row-cols-md-3">
+                {% for project in year2 %}
+                <div class="col-mb-4">
+                  <div class="card">
+                    {% if project.imgfile %}
+                    <img class="card-img-top" src="{{ project.imgfile.url }}" style="height: 200px; width: 100%;">
+                    {% else %}
+                    <img class="card-img-top" data-src="" style="height: 200px; width: 100%;">
+                    {% endif %}
+                    <div class="card-body" style="height: 150px;">
+                      <a href="/{{ project.id }}/">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                      </a>
+                      <p class = "card-text">이 프로젝트에 대한 설명. 이건 두줄 정도는 채워야 되지 않나 3줄이 맞을라나.</p>
+                    </div>
+                    <div class="card-footer">
+                      {{project.author.username}} ({{project.author.number}})
+                        <div style="float: right;">
+                          {{project.harts.count}}
+                          <img src="media/heart.svg" style="height: 25px; width: 25px;">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <div class="p-1 mb-4 bg-dark text-white rounded-pill">
+              +2024-1
+              <a href="byyears/3/" class="btn btn-sm btn-outline-secondary" style="float: right">2024-1</a>
+            </div>
+            <div class="container px-2">
+              <div class="row row-cols-1 row-cols-md-3">
+                {% for project in year3 %}
+                <div class="col-mb-4">
+                  <div class="card">
+                    {% if project.imgfile %}
+                    <img class="card-img-top" src="{{ project.imgfile.url }}" style="height: 200px; width: 100%;">
+                    {% else %}
+                    <img class="card-img-top" data-src="" style="height: 200px; width: 100%;">
+                    {% endif %}
+                    <div class="card-body" style="height: 150px;">
+                      <a href="/{{ project.id }}/">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                      </a>
+                      <p class = "card-text">이 프로젝트에 대한 설명. 이건 두줄 정도는 채워야 되지 않나 3줄이 맞을라나.</p>
+                    </div>
+                    <div class="card-footer">
+                      {{project.author.username}} ({{project.author.number}})
+                        <div style="float: right;">
+                          {{project.harts.count}}
+                          <img src="media/heart.svg" style="height: 25px; width: 25px;">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>  
+
+        <div class="col-4">
+          <div class="p-1 mb-4 bg-dark text-white rounded-pill">
+              만들어 주세요!
+          </div>
         </div>
-        {% endfor %}
       </div>
 
 
     </div>
   </div>
-  <a href="{% url 'project_create' %}" class="btn btn-primary">프로젝트 등록하기</a>
 </main>
 
 
