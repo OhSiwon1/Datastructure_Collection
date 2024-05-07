@@ -5,13 +5,15 @@ from DS.models import Project, Comment, Year
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project  # 사용할 모델
-        fields = ['title', 'content','video','year','imgfile']
+        fields = ['title', 'content','video','year','imgfile','uploadedFile','abstract']
         label={
             'title': '제목',
             'content': '내용',
             'video': '영상링크',
             'year':'제작연도',
-            'imgfile':'이미지'
+            'imgfile':'이미지',
+            'uploadedFile':'프로그램파일',
+            'abstract': '짧은설명',
         } 
 
 class CommentForm(forms.ModelForm):

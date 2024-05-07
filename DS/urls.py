@@ -11,6 +11,7 @@ urlpatterns = [
     path('project/modify/<int:project_id>/', views.project_modify, name='project_modify'),
     path('project/delete/<int:project_id>/', views.project_delete, name='project_delete'),
     path('project/vote/<int:project_id>/', views.project_vote, name='project_vote'),
-
+    path('comment/delete/<int:comment_id>/', views.comment_delete, name='comment_delete'),
+    path('assignplz/', views.assignplz, name='loginplz')
 ]
 

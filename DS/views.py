@@ -3,6 +3,7 @@ from .models import Project, Comment, Year
 from DS.forms import ProjectForm, CommentForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+from makeit.models import Question
 
 def group_check(user):
     return user.groups.filter(name='can_make_proj').exists()
@@ -10,10 +11,11 @@ def group_check(user):
 
 # Create your views here.
 def main(request):
-    year1=Year.objects.get(id=1).project_set.order_by('-harts')[:3]
+    year1=Year.objects.get(id=1).project_set.order_by()[:3]
     year2=Year.objects.get(id=2).project_set.order_by('-harts')[:3]
     year3=Year.objects.get(id=3).project_set.order_by('-harts')[:3]
-    context1={'year1':year1,'year2':year2,'year3':year3}
+    question_list=Question.objects.order_by()
+    context1={'year1':year1,'year2':year2,'year3':year3,'question_list':question_list}
     return render(request, 'DS/main.html', context1)
 
 
@@ -45,7 +47,7 @@ def comments_create(request,project_id):
     return render(request, 'DS/project_detail.html', context)
 
 @login_required(login_url='common:login')
-@user_passes_test(group_check, login_url='main') #login_url= "로그인해주세요창"
+@user_passes_test(group_check, login_url='loginplz') #login_url= "인증이 필요합니다. 창"
 def project_create(request):
     if request.method =='POST':
         form = ProjectForm(request.POST,request.FILES)
@@ -87,8 +89,17 @@ def project_delete(request, project_id):
 @login_required(login_url='common:login')
 def project_vote(request, project_id):
     project = Project.objects.get(pk=project_id)
-    if request.user == project.author:
-        messages.error(request, '본인이 작성한 글은 추천할수 없습니다')
-    else:
-        project.harts.add(request.user)
+    project.harts.add(request.user)
     return redirect('project_detail', project_id=project.id)
+
+@login_required(login_url='common:login')
+def comment_delete(request, comment_id):
+    comment = Comment.objects.get(pk=comment_id)
+    if request.user != comment.author:
+        messages.error(request, '삭제권한이 없습니다')
+    else:
+        comment.delete()
+    return redirect('project_detail', project_id=comment.project.id)
+
+def assignplz(request):
+    return render(request,'DS/assignplz.html')
