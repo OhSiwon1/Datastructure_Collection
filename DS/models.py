@@ -8,6 +8,7 @@ class Year(models.Model):
     def __str__(self):
         return self.year
 
+
 class Project(models.Model):
     title=models.CharField(max_length=100)
     content=models.TextField()

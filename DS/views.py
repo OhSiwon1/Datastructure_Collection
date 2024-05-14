@@ -4,6 +4,7 @@ from DS.forms import ProjectForm, CommentForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from makeit.models import Question
+from django.db.models import Count
 
 def group_check(user):
     return user.groups.filter(name='can_make_proj').exists()
@@ -11,11 +12,11 @@ def group_check(user):
 
 # Create your views here.
 def main(request):
-    year1=Year.objects.get(id=1).project_set.order_by()[:3]
-    year2=Year.objects.get(id=2).project_set.order_by('-harts')[:3]
-    year3=Year.objects.get(id=3).project_set.order_by('-harts')[:3]
+    year_list=[]
+    for yea in Year.objects.all():
+        year_list.append({'year':yea.year,'year_id':yea.id,'queryset':yea.project_set.annotate(like_count=Count('harts')).order_by('-like_count')[:3]})
     question_list=Question.objects.order_by()
-    context1={'year1':year1,'year2':year2,'year3':year3,'question_list':question_list}
+    context1={'year_list':year_list,'question_list':question_list}
     return render(request, 'DS/main.html', context1)
 
 
@@ -47,7 +48,7 @@ def comments_create(request,project_id):
     return render(request, 'DS/project_detail.html', context)
 
 @login_required(login_url='common:login')
-@user_passes_test(group_check, login_url='loginplz') #login_url= "인증이 필요합니다. 창"
+@user_passes_test(group_check, login_url='loginplz') #login_url= "<인증이 필요합니다.> 창"
 def project_create(request):
     if request.method =='POST':
         form = ProjectForm(request.POST,request.FILES)
