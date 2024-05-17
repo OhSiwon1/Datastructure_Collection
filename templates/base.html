@@ -47,7 +47,7 @@
             {% else %}
               <div>
               <a href="{% url 'common:login' %}"><button class="btns success">log in</button></a>
-              <a href="{% url 'common:signup' %}"><button class="btns success">sign in</button></a>
+              <a href="{% url 'common:signup' %}"><button class="btns success">sign up</button></a>
               <button class="btns success custom-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbarLight">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -67,6 +67,7 @@
               <p class="py-1"><a href="{% url 'byyears' 1 %}" class="offcanvaslink px-2">2023-1</a></p>
               <p class="py-1"><a href="{% url 'byyears' 2 %}" class="offcanvaslink px-2">2023-2</a></p>
               <p class="py-1"><a href="{% url 'byyears' 3 %}" class="offcanvaslink px-2">2024-1</a></p>
+              <p class="py-1"><a href="{% url 'project_create' %}" class="offcanvaslink px-2">프로젝트 등록</a></p>
             </div>
             <div class="offcanvas-footer">
               <div class="py-1"><a href="#" class="offcanvaslink px-4">버그 신고</a></div>

@@ -8,6 +8,11 @@ class Year(models.Model):
     def __str__(self):
         return self.year
 
+class Hashtag(models.Model):
+    content = models.TextField(unique=True)
+    def __str__(self):
+        return self.content
+
 
 class Project(models.Model):
     title=models.CharField(max_length=100)
@@ -15,11 +20,11 @@ class Project(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_project')
     year=models.ForeignKey(Year,on_delete=models.CASCADE)
     uploadedFile = models.FileField(upload_to="zipfile/",null=True, blank=True)
-    harts = models.ManyToManyField(User, related_name='hart_project')  # 추천인 추가
+    harts = models.ManyToManyField(User, related_name='hart_project',blank=True)  # 추천인 추가
     video=models.URLField()
     imgfile = models.ImageField(null=True, upload_to="", blank=True) # 이미지 컬럼 추가
     abstract=models.CharField(max_length=100)
-
+    hashtag=models.ManyToManyField(Hashtag,related_name='project_hashtag',blank=True)
 
     def __str__(self):
         return self.title

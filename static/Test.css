@@ -57,7 +57,7 @@ a:active{
   }
   .year:hover{
     color: #fff;
-    font-weight:1000;
+    font-weight:800;
   }
 
   .navlink{
@@ -67,7 +67,7 @@ a:active{
   }
   .navlink:hover{
     color: #072A40;
-    font-weight: 1000;
+    font-weight: 800;
   }
 
   .tablelink{
@@ -108,4 +108,34 @@ a:active{
     border: 2px solid #178ca477;
     border-radius: 10px;
 
+  }
+
+  .login-page {
+    width: 400px;
+    padding: 8% 0 8% 0;
+    margin: auto;
+    border: 2px solid #178ca4;
+    border-radius: 10px;
+  }
+
+  .login-div{
+    padding: 3% 0 3% 0;
+    margin: auto;
+  }
+
+  .logintitle{
+    text-align: center;
+  }
+
+  .loginbtns {
+    border: 2px solid white;
+    background-color: #178ca4;
+    color: white;
+    margin:auto;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    height: 37.33px;
+    width: 348px;
   }

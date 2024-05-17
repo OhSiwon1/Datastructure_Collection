@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container my-3">
+<div class="login-div">
+    <div class="login-page">
+    <div class="container">
+    <h2 class="logintitle">sign up</h2>
     <form method="post" action="{% url 'common:signup' %}">
         {% csrf_token %}
         {% include "form_errors.html" %}
@@ -29,7 +32,9 @@
             <input type="text" class="form-control" name="number" id="number"
                    value="{{ form.number.value|default_if_none:'' }}">
         </div>
-        <button type="submit" class="btn btn-primary">생성하기</button>
+        <button type="submit" class="loginbtns">sign up</button>
     </form>
+    </div>
+    </div>
 </div>
 {% endblock %}

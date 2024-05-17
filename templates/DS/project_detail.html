@@ -35,14 +35,18 @@
     <div class="col-4">
         <div style="background-color: #18b6be35; border-radius: 20px;">
             <div class="container py-3">
+                {% if project.imgfile %}
                 <div>
                 사진:
                 <img src="{{project.imgfile.url}}" width="100%" height="100%">
                 </div>
+                {%endif%}
+                {% if project.video %}
                 <div class="py-3">
                 시연 영상:
                 <iframe src="{{project.video}}" width="100%" height="200px" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
+                {%endif%}
                 {% if project.uploadedFile %}
                 <div class="py-3">
                 첨부 파일:
@@ -60,17 +64,16 @@
     {% if request.user == project.author %}
     <a href="{% url 'project_modify' project.id  %}" 
        class="btn btn-sm btn-outline-secondary">수정</a>
-    <a href="javascript:void(0)" onclick="del(this)" class="delete btn btn-sm btn-outline-secondary">삭제</a>
+    <a href="javascript:void(0)" onclick="del(this)" data-uri="{% url 'project_delete' project.id  %}" class="delete btn btn-sm btn-outline-secondary">삭제</a>
     {% endif %}
 </div>
 </div>
-<hr class="line">
-
 
 <div>
+  <div class="container">
+  <hr class="line">
     <h4>comments({{project.comment_set.count}})</h4>
     {% for comment in project.comment_set.all %}
-    <div class="container">
     <div class="commentcard mb-3">
         <div class="card-body">
           <div class="d-flex flex-start">
