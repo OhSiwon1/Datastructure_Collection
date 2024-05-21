@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Project, Comment, Year
+from .models import Project, Comment, Year, Hashtag
 from DS.forms import ProjectForm, CommentForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
@@ -19,6 +19,10 @@ def main(request):
     context1={'year_list':year_list,'question_list':question_list}
     return render(request, 'DS/main.html', context1)
 
+def Hashtag_view(request,hashtag_id):
+    hashtag= Hashtag.objects.get(id=hashtag_id)
+    context={'hashtag':hashtag}
+    return render(request,'DS/Hashtag.html',context)
 
 def ProjectsByYears_view(request,year_id):
     year = Year.objects.get(id=year_id)
@@ -59,7 +63,7 @@ def project_create(request):
             return redirect('main')
     else:
         form = ProjectForm()
-    context={'form':form}
+    context={'form':form,'year_list':Year.objects.all(),'hashtag_list':Hashtag.objects.all()}
     return render(request, 'DS/project_form.html', context)
 
 @login_required(login_url='common:login')
@@ -75,7 +79,7 @@ def project_modify(request, project_id):
             return redirect('project_detail', project_id=project.id)
     else:
         form = ProjectForm(instance=project)
-    context = {'form': form, 'project':project}
+    context = {'form': form, 'year_list':Year.objects.all(),'hashtag_list':Hashtag.objects.all(),'project':project}
     return render(request, 'DS/project_form.html', context)
 
 @login_required(login_url='common:login')

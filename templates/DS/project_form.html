@@ -14,65 +14,76 @@
     <h5 class="my-3 border-bottom pb-2">프로젝트 등록</h5>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-
         <div class="form-group row mb-4">
-        <label class="col-sm-2 col-form-label">Title:</label> 
-        <div class="col-sm-10">
-        <input type="text" placeholder="제목" class="form-control" name="title" value="{{project.title}}" maxlength="100" required id="id_content">
-        </div>
-        </div>
-
-        <div class="form-group row mb-4">
-        <label class="col-sm-2 col-form-label">Abstract:</label> 
-        <div class="col-sm-10">
-        <input type="text" placeholder="요약" class="form-control" name="abstract" value="{{project.abstract}}" maxlength="100" required id="id_content">       
-        </div>
-        </div>
-
-        <div class="form-group row mb-4">
-        <label class="col-sm-2 col-form-label">Content:</label> 
-        <div class="col-sm-10">
-        <textarea class="form-control" placeholder="내용" name="content" cols="40" rows="10" required id="id_content">{{project.content}}</textarea>
-        </div>
-        </div>
-
-        <div class="form-group row mb-4">
-        <label class="col-sm-2 col-form-label">Video:</label> 
-        <div class="col-sm-10">
-        <input type="url" class="form-control" placeholder="영상링크" name="video" value="{{project.video}}" maxlength="200" required id="id_video">
-        </div>
-        </div>
-
-        <div class="form-group row mb-4">
-        <label class="col-sm-2 col-form-label">Year:</label> 
-        <div class="col-sm-10">
-        <select name="year" class="form-control" required id="id_year">
-        <option value="" selected>---------</option>
-        <option value="1">2023-1</option>
-        <option value="2">2023-2</option>
-        <option value="3">2024-1</option>       
-        </select>
-        </div>
-        </div>
-
-        <div class="form-group row mb-4">
-        <label class="col-sm-2 col-form-label">프로젝트 사진:</label> 
-        <div class="col-sm-10">
-        <input type="file" class="form-control" name="imgfile" id="imgfile">
-        </div>
-        </div>
+            <label class="col-sm-2 col-form-label">Title:</label> 
+            <div class="col-sm-10">
+            <input type="text" placeholder="제목" class="form-control" name="title" value="{{project.title}}" maxlength="100" required id="id_content">
+            </div>
+            </div>
     
-        <div class="form-group row mb-4">
-        <label class="col-sm-2 col-form-label">프로젝트 파일: </label>
-        <div class="col-sm-10">
-        <input type="file" class="form-control" name="uploadedFile" id="uploadedFile">
-        </div>
-        </div>
+            <div class="form-group row mb-4">
+            <label class="col-sm-2 col-form-label">Abstract:</label> 
+            <div class="col-sm-10">
+            <input type="text" placeholder="요약" class="form-control" name="abstract" value="{{project.abstract}}" maxlength="100" required id="id_content">       
+            </div>
+            </div>
+    
+            <div class="form-group row mb-4">
+            <label class="col-sm-2 col-form-label">Content:</label> 
+            <div class="col-sm-10">
+            <textarea class="form-control" placeholder="내용" name="content" cols="40" rows="10" required id="id_content">{{project.content}}</textarea>
+            </div>
+            </div>
+    
+            <div class="form-group row mb-4">
+            <label class="col-sm-2 col-form-label">Video:</label> 
+            <div class="col-sm-10">
+            <input type="url" class="form-control" placeholder="영상링크" name="video" value="{{project.video}}" maxlength="200" required id="id_video">
+            </div>
+            </div>
+    
+            <div class="form-group row mb-4">
+            <label class="col-sm-2 col-form-label">Year:</label> 
+            <div class="col-sm-10">
+            <select name="year" class="form-control" required id="id_year">
+            <option value="" selected>---------</option>
+            {% for year in year_list %}
+            <option value="{{year.id}}">{{year.year}}</option>
+            {% endfor %}
+            </select>
+            </div>
+            </div>
+    
+            <div class="form-group row mb-4">
+            <label class="col-sm-2 col-form-label">프로젝트 사진:</label> 
+            <div class="col-sm-10">
+            <input type="file" class="form-control" name="imgfile" id="imgfile">
+            </div>
+            </div>
+        
+            <div class="form-group row mb-4">
+            <label class="col-sm-2 col-form-label">프로젝트 파일: </label>
+            <div class="col-sm-10">
+            <input type="file" class="form-control" name="uploadedFile" id="uploadedFile">
+            </div>
+            </div>
 
+            <div class="form-group row mb-4">
+                <label class="col-sm-2 col-form-label">해시태그:</label> 
+                <div class="col-sm-10">
+                    {%for hashtag in hashtag_list%}
+                    <input name="hashtag" class="form-check-input" type="checkbox" value="{{hashtag.id}}" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                      {{hashtag.content}}
+                    </label>
+                    {%endfor%}
+                </div>
+                </div>
+            
         <button type="submit" class="btn btn-primary">저장하기</button>
     </div>
     </form>
     </div>
 </div>
-
 {% endblock %}
+

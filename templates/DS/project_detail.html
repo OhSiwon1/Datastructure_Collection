@@ -54,23 +54,29 @@
                 <a href="{{ project.uploadedFile.url }}" class="btn btn-outline-dark" role="button" download>
                     Download: {{ project.get_file_name }}
                 </a>
+                </div>
                 {% endif %}
             </div>
         </div>
     
     </div>
 </div>
-<div class="my-3">
+<div class="my-1">
     {% if request.user == project.author %}
     <a href="{% url 'project_modify' project.id  %}" 
        class="btn btn-sm btn-outline-secondary">수정</a>
     <a href="javascript:void(0)" onclick="del(this)" data-uri="{% url 'project_delete' project.id  %}" class="delete btn btn-sm btn-outline-secondary">삭제</a>
     {% endif %}
+    {% if project.hashtag %}
+    {% for hashtag in project.hashtag.all %}
+    <a href="{% url 'hashtag_view' hashtag.id  %}" 
+    class="btn btn-sm btn-outline-secondary">#{{hashtag.content}}</a>
+    {% endfor %}
+  {% endif %}
 </div>
 </div>
 
-<div>
-  <div class="container">
+<div class="container">
   <hr class="line">
     <h4>comments({{project.comment_set.count}})</h4>
     {% for comment in project.comment_set.all %}
@@ -97,7 +103,6 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
     {% endfor %}
 </div>

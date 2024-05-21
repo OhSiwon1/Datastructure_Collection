@@ -52,3 +52,4 @@ def question_create(request):
         form = QuestionForm()
     context = {'form': form}
     return render(request, 'makeit/question_form.html', context)
+
