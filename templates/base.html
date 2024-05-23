@@ -40,22 +40,13 @@
               <b><a href="{% url 'byyears' 2 %}" class="navlink px-2">2023-2</a></b>
               <b><a href="{% url 'byyears' 3 %}" class="navlink px-2">2024-1</a></b>
             </ul>
-            {% if user.is_authenticated %}
-            <div>
-              <a href="{% url 'common:logout' %}"><button class="btns success">sign out ({{user.number}})</button></a>
-              <button class="btns success custom-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbarLight">
-                  <span class="navbar-toggler-icon"></span>
-              </button>
-            </div>
-            {% else %}
-              <div>
-              <a href="{% url 'common:login' %}"><button class="btns success">log in</button></a>
-              <a href="{% url 'common:signup' %}"><button class="btns success">sign up</button></a>
+            <form class="d-flex" role="search" id="searchForm" method="get" action="{% url 'search' %}">
+              <input class="form-control me-2" type="text" id="kw" name="kw" placeholder="프로젝트 검색" id="search_kw" value="{{ kw|default_if_none:'' }}">
+              <button class="me-2 btn btn-outline-success" style="width: 80px" type="submit">검색</button>
+            </form>        
               <button class="btns success custom-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbarLight">
                 <span class="navbar-toggler-icon"></span>
-            </button>
-              </div>
-            {% endif %} 
+              </button>
           </div>
         </div>
       </header>
@@ -71,6 +62,16 @@
               <p class="py-1"><a href="{% url 'byyears' 2 %}" class="offcanvaslink px-2">2023-2</a></p>
               <p class="py-1"><a href="{% url 'byyears' 3 %}" class="offcanvaslink px-2">2024-1</a></p>
               <p class="py-1"><a href="{% url 'project_create' %}" class="offcanvaslink px-2">프로젝트 등록</a></p>
+              {% if user.is_authenticated %}
+              <div>
+                <a href="{% url 'common:logout' %}"><button class="btns success">sign out ({{user.number}})</button></a>
+              </div>
+              {% else %}
+                <div>
+                <a href="{% url 'common:login' %}"><button class="btns success">log in</button></a>
+                <a href="{% url 'common:signup' %}"><button class="btns success">sign up</button></a>
+                </div>
+              {% endif %} 
             </div>
             <div class="offcanvas-footer">
               <div class="py-1"><a href="#" class="offcanvaslink px-4">버그 신고</a></div>

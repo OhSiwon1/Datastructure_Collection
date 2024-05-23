@@ -5,9 +5,16 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from makeit.models import Question
 from django.db.models import Count
+from django.db.models import Q
 
 def group_check(user):
     return user.groups.filter(name='can_make_proj').exists()
+
+def videourl(img_element_url):
+    video_id = img_element_url.split("/")[-1]
+    video_id = video_id.split("v=")[-1].split("&")[0]
+    embed_url = f"https://www.youtube.com/embed/{video_id}"
+    return embed_url
 
 
 # Create your views here.
@@ -59,6 +66,7 @@ def project_create(request):
         if form.is_valid():
             project=form.save(commit=False)
             project.author = request.user
+            project.video = videourl(project.video)
             project.save()
             return redirect('main')
     else:
@@ -108,3 +116,16 @@ def comment_delete(request, comment_id):
 
 def assignplz(request):
     return render(request,'DS/assignplz.html')
+
+def Search_view(request):
+    kw = request.GET.get('kw', '')  # 검색어
+    project_list = Project.objects.order_by()
+    if kw:
+        project_list = project_list.filter(
+            Q(title__icontains=kw) |  # 제목 검색
+            Q(content__icontains=kw) |  # 내용 검색
+            Q(author__username__icontains=kw)  # 질문 글쓴이 검색
+        ).distinct()
+    context = {'kw': kw,'project_list':project_list}
+    return render(request, 'DS/search.html', context)
+
