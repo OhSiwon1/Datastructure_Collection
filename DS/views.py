@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import Project, Comment, Year, Hashtag
-from DS.forms import ProjectForm, CommentForm
+from DS.forms import ProjectForm, CommentForm,OldForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from makeit.models import Question
@@ -9,6 +9,9 @@ from django.db.models import Q
 
 def group_check(user):
     return user.groups.filter(name='can_make_proj').exists()
+
+def group_check(user):
+    return user.groups.filter(name='h_teacher').exists()
 
 def videourl(img_element_url):
     video_id = img_element_url.split("/")[-1]
@@ -128,4 +131,19 @@ def Search_view(request):
         ).distinct()
     context = {'kw': kw,'project_list':project_list}
     return render(request, 'DS/search.html', context)
+
+@login_required(login_url='common:login')
+@user_passes_test(group_check, login_url='loginplz') #login_url= "<인증이 필요합니다.> 창"
+def old_create(request):
+    if request.method =='POST':
+        form = OldForm(request.POST,request.FILES)
+        if form.is_valid():
+            oldproj=form.save(commit=False)
+            oldproj.author = request.user
+            oldproj.video = videourl(oldproj.video)
+            oldproj.save()
+    else:
+        form = OldForm()
+    context={'form':form,'year_list':Year.objects.all()}
+    return render(request, 'DS/oldproj_form.html', context)
 
