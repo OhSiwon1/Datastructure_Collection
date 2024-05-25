@@ -9,7 +9,8 @@ from django.db.models import Q
 import logging
 logger = logging.getLogger('croffle')
 
-def group_check(user):
+def group_checks(user):
+    print(user.groups.filter(name='can_make_proj').exists())
     return user.groups.filter(name='can_make_proj').exists()
 
 def group_check(user):
@@ -65,7 +66,7 @@ def comments_create(request,project_id):
     return render(request, 'DS/project_detail.html', context)
 
 @login_required(login_url='common:login')
-@user_passes_test(group_check, login_url='loginplz') #login_url= "<인증이 필요합니다.> 창"
+@user_passes_test(group_checks, login_url='loginplz') #login_url= "<인증이 필요합니다.> 창"
 def project_create(request):
     if request.method =='POST':
         form = ProjectForm(request.POST,request.FILES)
