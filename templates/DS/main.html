@@ -10,7 +10,14 @@
     background-image: url(media/DS_Background.jpg);
     height: 322px;
   ">
-  <div class="mask" style="background-color: rgba(7, 42, 64,0.8); height: 322px; width:100%">
+  <div class="mask" style="background-color: rgba(7, 42, 64, 0.7); height: 322px; width:100%">
+    <div class="container">
+      <div style="text-align:center;font-size:700%; color:#ccb854; font-family: Poetsen One;">Croffle</div>
+      <div style="text-align:center;font-size:110%; color:#F9F7F0;">안녕하세요? 자료구조 프로젝트 모음 사이트 Croffle입니다!</div>
+      <div style="text-align:center;font-size:110%; color:#F9F7F0;">선배들의 멋진 프로젝트들을 직접 사용하거나 아이디어를 얻을 수 있습니다.</div>
+      <div style="text-align:center;font-size:110%; color:#F9F7F0;">&lt만들어주세요!&gt게시판을 통해 요청을 해보세요!</div>
+      <div style="text-align:center;font-size:110%; color:#F9F7F0;">(made by Oh, Choi)</div>
+    </div>
   </div>
 </div>
 <!-- Jumbotron -->
@@ -95,14 +102,6 @@
 {% endblock %}
 
 {% block script %}
-<script type='text/javascript'>
-
-function del(el) {
-  if(confirm("정말로 삭제하시겠습니까?")) {
-            location.href = el.dataset.uri;
-        };
-}
-</script>
 {% endblock %}
 
 

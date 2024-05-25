@@ -1,14 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko" style="background-color: #072a40;">
-
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
     <!-- 글씨체 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -26,7 +25,6 @@
     <title>DS</title>
 </head>
 <body style="font-family: 'Noto Sans Kr'; color: #072A40;">
-    <header>
       <header class="p-2 border-bottom" style="background-color: #F9F7F0;">
         <div class="container">
           <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -42,7 +40,7 @@
             </ul>
             <form class="d-flex" role="search" id="searchForm" method="get" action="{% url 'search' %}">
               <input class="form-control me-2" type="text" id="kw" name="kw" placeholder="프로젝트 검색" id="search_kw" value="{{ kw|default_if_none:'' }}">
-              <button class="me-2 btn btn-outline-success" style="width: 80px" type="submit">검색</button>
+              <button class="btns success me-2" style="width: 80px; height: 37.2px;" type="submit">검색</button>
             </form>        
               <button class="btns success custom-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbarLight">
                 <span class="navbar-toggler-icon"></span>
@@ -50,35 +48,45 @@
           </div>
         </div>
       </header>
-           </div>
-           <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #072A40; color:#F9F7F0">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">목록</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" style="background-color:white"></button>
-            </div>
-            <div class="offcanvas-body" style="color:#F9F7F0">
-              <p class="py-1"><a href="{% url 'makeit:index' %}" class="offcanvaslink px-2">&lt만들어주세요!&gt</a></p>
-              <p class="py-1"><a href="{% url 'byyears' 1 %}" class="offcanvaslink px-2">2023-1</a></p>
-              <p class="py-1"><a href="{% url 'byyears' 2 %}" class="offcanvaslink px-2">2023-2</a></p>
-              <p class="py-1"><a href="{% url 'byyears' 3 %}" class="offcanvaslink px-2">2024-1</a></p>
-              <p class="py-1"><a href="{% url 'project_create' %}" class="offcanvaslink px-2">프로젝트 등록</a></p>
-              {% if user.is_authenticated %}
-              <div>
-                <a href="{% url 'common:logout' %}"><button class="btns success">sign out ({{user.number}})</button></a>
-              </div>
-              {% else %}
-                <div>
-                <a href="{% url 'common:login' %}"><button class="btns success">log in</button></a>
-                <a href="{% url 'common:signup' %}"><button class="btns success">sign up</button></a>
-                </div>
-              {% endif %} 
-            </div>
-            <div class="offcanvas-footer">
-              <div class="py-1"><a href="#" class="offcanvaslink px-4">버그 신고</a></div>
-            </div>
-            </div>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="width:400px;background-color: #F9F7F0; color:#F9F7F0">
+        <div class="offcanvas-header" style="  border-bottom: solid 1px #072A40;">
+          <h5 class="offcanvas-title" style="color:#072A40; font-size: 200%;" id="offcanvasNavbarLabel"><img class="me-1"src="{%static 'croffle_5816205.png'%}" width="40px" height="40px">Croffle</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" style="background-color:white"></button>
         </div>
-    </header>
+        <div class="offcanvas-body" style="color:#072A40">
+          <div class="container px-3 py-3">
+          <p class="py-1"><a href="{% url 'makeit:index' %}" class="offcanvaslink px-2">&lt만들어주세요!&gt 게시판</a></p>
+          <p class="py-1"><a href="{% url 'byyears' 1 %}" class="offcanvaslink px-2">2023-1 산출물</a></p>
+          <p class="py-1"><a href="{% url 'byyears' 2 %}" class="offcanvaslink px-2">2023-2 산출물</a></p>
+          <p class="py-1"><a href="{% url 'byyears' 3 %}" class="offcanvaslink px-2">2024-1 산출물</a></p>
+          </div>
+        </div>
+        <div class="offcanvas-footer" style="color:#072A40; border-top: solid 1px #072A40;">
+          <div class="px-3 py-4">
+            {% if user.is_authenticated %}
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Profile_photo_placeholder_square.svg" width="40" height="40" class="rounded-circle">
+            <!-- Default dropup button -->
+            <div class="btn-group dropup">
+              <button type="button" class="btnss dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                {{user.username}}({{user.number}})
+              </button>
+              <ul class="dropdown-menu">
+                <!-- Dropdown menu links -->
+                <li><a class="dropdown-item" href="{% url 'project_create' %}">프로젝트 등록</a></li>
+                <li><a class="dropdown-item" href="{% url 'common:logout' %}">로그아웃</a></li>
+              </ul>
+            </div>            
+            {% else %}
+            <div class="px-3">
+              <a class="me-2"href="{% url 'common:login' %}" style="color:#072A40;text-decoration: none; font-weight: 800; font-size: 16px;">로그인</a>
+              <a href="{% url 'common:signup' %}" style="color:#59656c; font-size: 16px;">회원가입</a>
+            </div>
+            {% endif %} 
+          </div>
+        </div>
+        </div>
+
+        
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
 {% block content %}
 {% endblock %}
