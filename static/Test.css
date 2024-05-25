@@ -168,3 +168,8 @@ a:active{
     font-weight: bold;
     height: 37.33px;
   }
+
+  
+  .bg-image{
+    background-image: url("DS_Background.jpg");
+  }
