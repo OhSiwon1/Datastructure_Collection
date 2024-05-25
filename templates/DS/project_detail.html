@@ -6,7 +6,7 @@
 <div class="container px-5 py-3">
       <div class="container py-3">
         <h1>{{ project.title }}</h1> 
-        제작자: {{project.author.username}} ({{project.author.number}}) <span class="badge rounded-pill" style="background-color: #18b7be;">{{project.harts.count}}</span>
+        제작자: {{project.member}} <span class="badge rounded-pill" style="background-color: #18b7be;">{{project.harts.count}}</span>
           <div style="float: right;">
             <a href="javascript:void(0)"  onclick="vote(this)" data-uri="{% url 'project_vote' project.id  %}"
             class="btn btn-outline-secondary">
