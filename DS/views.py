@@ -6,6 +6,8 @@ from django.contrib import messages
 from makeit.models import Question
 from django.db.models import Count
 from django.db.models import Q
+import logging
+logger = logging.getLogger('croffle')
 
 def group_check(user):
     return user.groups.filter(name='can_make_proj').exists()
@@ -22,6 +24,7 @@ def videourl(img_element_url):
 
 # Create your views here.
 def main(request):
+    logger.info("INFO 레벨로 출력")
     year_list=[]
     for yea in Year.objects.all():
         year_list.append({'year':yea.year,'year_id':yea.id,'queryset':yea.project_set.annotate(like_count=Count('harts')).order_by('-like_count')[:3]})
