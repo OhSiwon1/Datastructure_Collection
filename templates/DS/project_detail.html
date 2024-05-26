@@ -1,80 +1,92 @@
 {% extends 'base.html' %}
+{% block title %}{{project.title}}{% endblock %}
+
 {% block content %}
 {% load DS_filter %}
 {% load static %}
+
 {%if project.content %}
-<div class="container-fluid px-5 py-3">
-  <div class="container-fluid px-5">
-      <div class="container-fluid py-3">
+<div class="container px-4 py-3">
+  <div class="container px-4">
+      <div class="container-fluid py-1">
         <h1>{{ project.title }}</h1> 
         제작자: {{project.member}} <span class="badge rounded-pill" style="background-color: #18b7be;">{{project.harts.count}}</span>
           <div style="float: right;">
             <a href="javascript:void(0)"  onclick="vote(this)" data-uri="{% url 'project_vote' project.id  %}"
-            class="btn btn-outline-secondary">
-              <span style="display:inline-block;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Thumbs_up_%28example%29.svg" width="17px" height="17px"></img>
+            class="btn btn-outline-secondary" style="height:35px">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Thumbs_up_%28example%29.svg" width="13px" height="13px"></img>
                 좋아요
-              </span>                
             </a>
             <a href="javascript:void(0)" data-uri="{% url 'project_vote' project.id  %}"
-            class="btn btn-outline-secondary">
-            <span style="display:inline-block;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Ei-share-apple.svg" width="21px" height="21px"></img>
+            class="btn btn-outline-secondary"style="height:35px">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Ei-share-apple.svg" width="17px" height="17px"></img>
                 공유
             </a>
           </div>
-        </span>
       </div>
-    <hr class="line">
+    <div class="py-2">
+      <hr class="line">
+    </div>
 
-<div class="row py-3" >
-    <div class="col-8">
+<div class="row row-cols-xs-1 row-cols-lg-2" >
+  <div class="col-lg-4 col-xs-6 py-1">
+    <div style="background-color: #18b6be35; border-radius: 20px;">
+        <div class="container py-3">
+            {% if project.poster %}
+            <div>
+            포스터:
+            <img src="{{project.poster.url}}" width="100%" height="100%" style="border-radius: 17px;">
+            </div>
+            {%endif%}
+            {% if project.video %}
+            <div class="py-3">
+            시연 영상:
+            <iframe src="{{project.video}}" width="100%" height="200px" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            {%endif%}
+            {% if project.uploadedFile %}
+            <div class="py-1">
+            첨부 파일(다운로드):
+            <br>
+            <a href="{{ project.uploadedFile.url }}" class="btn btn-outline-dark" role="button" download>
+                프로젝트 zip파일
+            </a>
+            </div>
+            {% endif %}
+            {% if project.repoter %}
+            <div class="py-1">
+            <a href="{{ project.repoter.url }}" class="btn btn-outline-dark" role="button" download>
+                최종보고서
+            </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if request.user == project.author %}
+    <div class="py-2" style="float: right;">
+      <a href="{% url 'project_modify' project.id  %}" 
+      class="btn btn-sm btn-outline-secondary">수정</a>
+      <a href="javascript:void(0)" onclick="del(this)" data-uri="{% url 'project_delete' project.id  %}" 
+       class="delete btn btn-sm btn-outline-secondary">삭제</a>
+    </div>
+    {% endif %}
+</div>
+    <div class="col-lg-8 col-xs-6 py-1">
     <div style="background-color: #18b6be35; border-radius: 20px;">
         <div class="container py-3">        
             {{ project.content|mark }}
         </div>
     </div>
     </div>
-    <div class="col-4">
-        <div style="background-color: #18b6be35; border-radius: 20px;">
-            <div class="container py-3">
-                {% if project.imgfile %}
-                <div>
-                사진:
-                <img src="{{project.imgfile.url}}" width="100%" height="100%">
-                </div>
-                {%endif%}
-                {% if project.video %}
-                <div class="py-3">
-                시연 영상:
-                <iframe src="{{project.video}}" width="100%" height="200px" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                {%endif%}
-                {% if project.uploadedFile %}
-                <div class="py-3">
-                첨부 파일:
-                <br>
-                <a href="{{ project.uploadedFile.url }}" class="btn btn-outline-dark" role="button" download>
-                    Download: {{ project.get_file_name }}
-                </a>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
 </div>
-<div class="my-1">
-    {% if request.user == project.author %}
-    <a href="{% url 'project_modify' project.id  %}" 
-       class="btn btn-sm btn-outline-secondary">수정</a>
-    <a href="javascript:void(0)" onclick="del(this)" data-uri="{% url 'project_delete' project.id  %}" class="delete btn btn-sm btn-outline-secondary">삭제</a>
-    {% endif %}
+<div class="py-2" style="float: right;">
     {% if project.hashtag %}
     {% for hashtag in project.hashtag.all %}
     <a href="{% url 'hashtag_view' hashtag.id  %}" 
     class="btn btn-sm btn-outline-secondary">#{{hashtag.content}}</a>
     {% endfor %}
   {% endif %}
+</div>
 </div>
 </div>
 {%else%}
@@ -126,17 +138,17 @@
                   {%endif%}
                 </div>
                 </div>
+                {% if request.user == project.author %}
+                <a href="{% url 'project_modify' project.id  %}" 
+                   class="btn btn-sm btn-outline-secondary">수정</a>
+                <a href="javascript:void(0)" onclick="del(this)" data-uri="{% url 'project_delete' project.id  %}" 
+                    class="delete btn btn-sm btn-outline-secondary">삭제</a>
+                {% endif %}
               </div>
               </div>
             </div>
     </div>
 </div>
-    {% if request.user == project.author %}
-    <a href="{% url 'project_modify' project.id  %}" 
-       class="btn btn-sm btn-outline-secondary">수정</a>
-    <a href="javascript:void(0)" onclick="del(this)" data-uri="{% url 'project_delete' project.id  %}" 
-        class="delete btn btn-sm btn-outline-secondary">삭제</a>
-    {% endif %}
     {% if project.hashtag %}
     {% for hashtag in project.hashtag.all %}
     <a href="{% url 'hashtag_view' hashtag.id  %}" 
@@ -145,38 +157,42 @@
   {% endif %}
 </div>
 {%endif%}
-<div class="container">
+<div class="container py-3">
   <hr class="line">
-    <h4>comments({{project.comment_set.count}})</h4>
-    {% for comment in project.comment_set.all %}
-    <div class="commentcard mb-3">
-        <div class="card-body">
-          <div class="d-flex flex-start">
-            <img class="rounded-circle shadow-1-strong me-3"
-              src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(21).webp" alt="avatar" width="40"
-              height="40" />
-            <div class="w-100">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h6 class="text-primary mb-0">
-                  <b>{{comment.author}}</b>
-                  <span class="text-body ms-2">{{comment.content}}</span>
-                </h6>
-                <p class="mb-0">1 days ago</p>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="small mb-0" style="color: #aaa;">
-                  <a href="javascript:void(0)"  onclick="del(this)" data-uri="{% url 'comment_delete' comment.id  %}" class="link-grey">Remove</a> •
-                  <a href="#!" class="link-grey">modify</a>
-                </p>
+    <div class="container">
+      <h4>댓글({{project.comment_set.count}})</h4>
+      {% for comment in project.comment_set.all %}
+      <div class="commentcard mb-3">
+          <div class="card-body">
+            <div class="d-flex flex-start">
+              <img class="rounded-circle shadow-1-strong me-3"
+                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(21).webp" alt="avatar" width="40"
+                height="40" />
+              <div class="w-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h6 class="text-primary mb-0">
+                    <b>{{comment.author}}</b>
+                    <span class="text-body ms-2">{{comment.content}}</span>
+                  </h6>
+                  <p class="mb-0"></p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="small mb-0" style="color: #aaa;">
+                    {%if request.user == comment.author %}
+                    <a href="javascript:void(0)"  onclick="del(this)" data-uri="{% url 'comment_delete' comment.id  %}" class="link-grey">Remove</a>
+                    {%endif%}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
 </div>
 
 <div class="container">
+  <div class="container">
     {% if messages %}
     <div class="alert alert-danger my-3" role="alert">
     {% for message in messages %}
@@ -204,13 +220,17 @@
 
             <div data-mdb-input-init class="form-outline">
                 <textarea {% if not user.is_authenticated %}disabled{% endif %}
-                     name="content" id="content" class="form-control" rows="10"></textarea>
+                     name="content" id="content" class="form-control" rows="2" placeholder="욕설 및 비방이 과도한 글은 삭제됩니다. 예쁜말을 써주세요 ^^"></textarea>
                 <label class="form-label" for="textAreaExample"></label>
             </div>
-            <input type="submit" value="댓글작성">
+            <button class="btn btn-outline-secondary" style="float: right;" type="submit">댓글 작성</button>
         </form>
+        <div class="py-3">
+
+        </div>
     </div>
   </div>
+</div>
 </div>
 
 {% endblock %}

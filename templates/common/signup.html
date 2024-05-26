@@ -3,7 +3,7 @@
 <div class="login-div">
     <div class="login-page">
     <div class="container">
-    <h2 class="logintitle">sign up</h2>
+    <h2 class="logintitle">회원가입</h2>
     <form method="post" action="{% url 'common:signup' %}">
         {% csrf_token %}
         {% include "form_errors.html" %}

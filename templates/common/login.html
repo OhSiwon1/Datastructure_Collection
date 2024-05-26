@@ -3,7 +3,7 @@
 <div class="login-div">
 <div class="login-page">
     <div class="container">
-    <h2 class="logintitle">Log in</h2>
+    <h2 class="logintitle">로그인</h2>
     <form method="post" action="{% url 'common:login' %}">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}">
@@ -20,6 +20,7 @@
         </div>
         <button type="submit" class="loginbtns">log in</button>
     </form>
+    <a href="{% url 'common:signup' %}"style="color:#59656c; font-size: 16px; float: right;">회원가입</a>
     </div>
 </div>
 </div>

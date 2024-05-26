@@ -21,7 +21,7 @@
                 {{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}
             </td>            
             <td>
-                <a class="navlink" href="{% url 'makeit:detail' question.id %}">{{ question.subject }}</a>
+                <a class="navlink"style="color:#072A40;" href="{% url 'makeit:detail' question.id %}">{{ question.subject }}</a>
             </td>
             <td>{{ question.author }}</td>
             <td>{{ question.create_date }}</td>
@@ -72,7 +72,7 @@
             {% endif %}
         </ul>
         <!-- 페이징처리 끝 -->
-    <a href="{% url 'makeit:question_create' %}" class="btn btn-primary">질문 등록하기</a>
+    <a href="{% url 'makeit:question_create' %}" class="btn btn-outline-secondary" style="float: right;">질문 등록하기</a>
 </div>
 
 {% endblock %}

@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
+
+{% block title %}{{kw}} - Croffle{% endblock %}
+
 {% block content %}
 
 {% load static %}
 <div class="album py-5 bg-light">
     <div class="container px-5">
-      <h1>{{ kw }}</h1>
-      <hr>
+      <h2>검색어: {{ kw }}</h2>
+      <hr class="line">
       {% if project_list %}
         <div class="row row-cols-1 row-cols-md-3">
             {% for project in project_list %}
@@ -18,7 +21,7 @@
                 {% endif %}
                 <div class="card-body" style="height: 150px;">
                 <a href="/{{ project.id }}/" style="text-decoration: none; color: black;">
-                    <h5 class="navlink">{{ project.title }}</h5>
+                    <h5 class="navlink"style="color:#072A40;">{{ project.title }}</h5>
                 </a>
                 <p class = "card-text">{{project.abstract}}</p>
                 </div>

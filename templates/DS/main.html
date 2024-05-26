@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
+{% block title %}Croffle{% endblock %}
+
 {% block content %}
-
-
 <main>
     
   {% load static %}
@@ -11,7 +11,7 @@
   ">
   <div class="mask" style="background-color: rgba(7, 42, 64, 0.7); height: 322px; width:100%">
     <div class="container">
-      <div style="text-align:center;font-size:700%; color:#ccb854; font-family: Poetsen One;">Croffle</div>
+      <div style="text-align:center;font-size:600%; color:#ccb854; font-family: Poetsen One;">Croffle</div>
       <div style="text-align:center;font-size:110%; color:#F9F7F0;">안녕하세요? 자료구조 프로젝트 모음 사이트 Croffle입니다!</div>
       <div style="text-align:center;font-size:110%; color:#F9F7F0;">선배들의 멋진 프로젝트들을 직접 사용하거나 아이디어를 얻을 수 있습니다.</div>
       <div style="text-align:center;font-size:110%; color:#F9F7F0;">&lt만들어주세요!&gt게시판을 통해 요청을 해보세요!</div>
@@ -23,7 +23,7 @@
 
 
 
-  <div class="album py-4" style="background-color: #F9F7F0;">
+  <div class="album py-4">
     <div class="container px-2">
 
       <div class="row g-0">
@@ -45,7 +45,7 @@
                     {% endif %}
                     <div class="card-body" style="height: 150px;">
                       <a href="/{{ project.id }}/" style="text-decoration: none; color: black;">
-                        <h5 class="navlink">{{ project.title }}</h5>
+                        <h5 class="navlink"style="color:#072A40;">{{ project.title }}</h5>
                       </a>
                       <p class="hi">{{ project.abstract }}</p>
                     </div>
@@ -72,7 +72,7 @@
 
         </div>  
 
-        <div class="col-sm-6 col-md-4 container">
+        <div class="col-sm-6 col-md-4 container px-4">
           <div class="p-1 mb-4 text-white rounded-pill" style="background-color:#178CA4;">
             <a href="{%url 'makeit:index'%}" class="year px-2">&lt만들어주세요!&gt</a>
           </div>

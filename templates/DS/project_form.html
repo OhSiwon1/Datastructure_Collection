@@ -11,46 +11,46 @@
     {% endif %}
 <div class="container-fluid px-5">
     <div class="container px-5">
-    <h5 class="my-3 border-bottom pb-2">프로젝트 등록</h5>
+    <h5 class="my-3">프로젝트 등록</h5>
+    <hr class="line">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group row mb-4">
-            <label class="col-sm-2 col-form-label">Title:</label> 
+            <label class="col-sm-2 col-form-label">타이틀:</label> 
             <div class="col-sm-10">
             <input type="text" placeholder="제목" class="form-control" name="title" value="{{project.title}}" maxlength="100" required>
             </div>
             </div>
 
             <div class="form-group row mb-4">
-            <label class="col-sm-2 col-form-label">member:</label> 
+            <label class="col-sm-2 col-form-label">팀원:</label> 
             <div class="col-sm-10">
-            <input type="text" placeholder="멤버" class="form-control" name="member" value="{{project.member}}" maxlength="100" required>       
+            <input type="text" placeholder="Ex) 최시원(231-17), 오유찬(23-091)" class="form-control" name="member" value="{{project.member}}" maxlength="100" required>       
             </div>
-            </div>
-
+            </div>            
             <div class="form-group row mb-4">
-            <label class="col-sm-2 col-form-label">Abstract:</label> 
+            <label class="col-sm-2 col-form-label">요약:</label> 
             <div class="col-sm-10">
             <input type="text" placeholder="요약" class="form-control" name="abstract" value="{{project.abstract}}" maxlength="100" required>       
             </div>
             </div>
     
             <div class="form-group row mb-4">
-            <label class="col-sm-2 col-form-label">Content:</label> 
+            <label class="col-sm-2 col-form-label">내용(마크다운 사용):</label> 
             <div class="col-sm-10">
             <textarea class="form-control" placeholder="내용" name="content" cols="40" rows="10">{{project.content}}</textarea>
             </div>
             </div>
     
             <div class="form-group row mb-4">
-            <label class="col-sm-2 col-form-label">Video:</label> 
+            <label class="col-sm-2 col-form-label">시연 영상:</label> 
             <div class="col-sm-10">
             <input type="url" class="form-control" placeholder="영상링크" name="video" value="{{project.video}}" maxlength="200" required id="id_video">
             </div>
             </div>
     
             <div class="form-group row mb-4">
-            <label class="col-sm-2 col-form-label">Year:</label> 
+            <label class="col-sm-2 col-form-label">제작 학기:</label> 
             <div class="col-sm-10">
             <select name="year" class="form-control" required id="id_year">
             <option value="" selected>---------</option>
@@ -68,17 +68,28 @@
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group row mb-4">
-                <label class="col-sm-4 col-form-label">프로젝트 사진:</label> 
+                <label class="col-sm-4 col-form-label">썸네일:</label> 
                 <div class="col-sm-8">
-                <input type="file" class="form-control" required name="imgfile" id="imgfile" value="{{project.imgfile}}">
+                  {% if project.imgfile %}
+                  <input type="file" class="form-control" name="imgfile" id="imgfile" value="{{project.imgfile}}">
+                  <div style="font-size: 80%;">현재: {{project.imgfile}}</div>
+                  {% else %}
+                  <input required type="file" class="form-control" name="imgfile" id="imgfile" value="{{project.imgfile}}">
+                  {% endif %}
                 </div>
                 </div>
               </div>
+              
               <div class="col-sm-6">
                 <div class="form-group row mb-4">
                 <label class="col-sm-4 col-form-label">포스터:</label> 
                 <div class="col-sm-8">
-                <input type="file" required class="form-control" name="poster" id="poster" value="{{project.poster}}">
+                  {% if project.poster %}
+                  <input type="file"  class="form-control" name="poster" id="poster" value="{{project.poster}}">
+                  <div style="font-size: 80%;">현재: {{project.poster}}</div>
+                  {%else%}
+                  <input required type="file" required class="form-control" name="poster" id="poster" value="{{project.poster}}">
+                  {%endif%}
                 </div>
                 </div>
               </div>
@@ -89,15 +100,26 @@
                 <div class="form-group row mb-4">
                 <label class="col-sm-4 col-form-label">최종보고서:</label> 
                 <div class="col-sm-8">
-                <input type="file" class="form-control" name="repoter" id="repoter"value="{{project.repoter}}">
+                  {%if project.repoter%}
+                  <input type="file" class="form-control" name="repoter" id="repoter"value="{{project.repoter}}">
+                  <div style="font-size: 80%;">현재: {{project.repoter}}</div>
+                  {%else%}
+                  <input required type="file" class="form-control" name="repoter" id="repoter"value="{{project.repoter}}">
+                  {%endif%}
                 </div>
                 </div>
               </div>
+
               <div class="col-sm-6">
                 <div class="form-group row mb-4">
                 <label class="col-sm-4 col-form-label">프로젝트 파일: </label>
                 <div class="col-sm-8">
-                <input type="file" required class="form-control" name="uploadedFile" id="uploadedFile" value="{{project.uploadedFile}}">
+                  {%if project.uploadedFile%}
+                    <input type="file" class="form-control" name="uploadedFile" id="uploadedFile" value="{{project.uploadedFile}}">
+                    <div style="font-size: 80%;">현재: {{project.uploadedFile}}</div>
+                  {%else%}
+                    <input required type="file" required class="form-control" name="uploadedFile" id="uploadedFile" value="{{project.uploadedFile}}">
+                  {%endif%}
                 </div>
                 </div>
               </div>
@@ -120,8 +142,10 @@
                     {%endfor%}
                 </div>
                 </div>
-            
-        <button type="submit" class="btn btn-primary">저장하기</button>
+                <hr class="line">
+        <div class="py-2" style="text-align: center; margin-bottom: 14px;">
+          <button type="submit" class="btn btn-outline-secondary" style="width:200px;">저장하기</button>
+        </div>
     </div>
     </form>
     </div>

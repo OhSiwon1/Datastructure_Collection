@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
+{% block title %}{{year.year}} 프로젝트{% endblock %}
+
 {% block content %}
 
 {% load static %}
 <div class="album py-5 bg-light">
     <div class="container px-5">
       <h1>{{ year.year }}</h1>
-      <hr>
+      <hr class="line">
       <div class="row row-cols-1 row-cols-md-3">
         {% for project in year.project_set.all %}
         <div class="col-mb-4 py-1">
@@ -17,7 +19,7 @@
             {% endif %}
             <div class="card-body" style="height: 150px;">
               <a href="/{{ project.id }}/" style="text-decoration: none; color: black;">
-                <h5 class="navlink">{{ project.title }}</h5>
+                <h5 class="navlink"style="color:#072A40;">{{ project.title }}</h5>
               </a>
               <p class = "card-text">{{project.abstract}}</p>
             </div>

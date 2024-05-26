@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import Question
+from .models import Question, Answer
 from django.utils import timezone
 from .forms import QuestionForm, AnswerForm
 from django.core.paginator import Paginator  
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 
 
 # Create your views here.
@@ -53,3 +53,12 @@ def question_create(request):
     context = {'form': form}
     return render(request, 'makeit/question_form.html', context)
 
+@login_required(login_url='common:login')
+def answer_delete(request, answer_id):
+    print(answer_id)
+    answer = Answer.objects.get(id=answer_id)
+    if request.user != answer.author:
+        messages.error(request, '삭제권한이 없습니다')
+    else:
+        answer.delete()
+    return redirect('makeit:detail', question_id=answer.question.id)
