@@ -20,9 +20,9 @@ class Project(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_project')
     year=models.ForeignKey(Year,on_delete=models.CASCADE)
     uploadedFile = models.FileField(upload_to="zipfile/",null=True)
-    harts = models.ManyToManyField(User, related_name='hart_project',blank=True)  # 추천인 추가
+    harts = models.ManyToManyField(User, related_name='hart_project',blank=True)
     video=models.URLField()
-    imgfile = models.ImageField(null=True, upload_to="") # 이미지 컬럼 추가
+    imgfile = models.ImageField(null=True, upload_to="")
     abstract=models.CharField(max_length=100,blank=True)
     hashtag=models.ManyToManyField(Hashtag,related_name='project_hashtag',blank=True)
     member=models.CharField(max_length=100)

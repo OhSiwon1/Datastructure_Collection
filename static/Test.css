@@ -64,6 +64,12 @@ a:active{
     color: #072A40;
     text-decoration: none;
     font-weight: 700;
+    overflow: hidden;  
+    text-overflow: ellipsis;  	
+    word-break:break-all;
+    display: -webkit-box; 
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
   .navlink:hover{
     color: #072A40;
@@ -172,4 +178,23 @@ a:active{
   
   .bg-image{
     background-image: url("DS_Background.jpg");
+  }
+
+  .hi{
+    overflow: hidden;  
+    text-overflow: ellipsis;  	
+    word-break:break-all;
+    display: -webkit-box; 
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+
+  .hiii{
+    font-size: 90%;
+    overflow: hidden;  
+    text-overflow: ellipsis;  	
+    word-break:break-all;
+    display: -webkit-box; 
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }

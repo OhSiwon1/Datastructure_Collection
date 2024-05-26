@@ -10,7 +10,6 @@ import logging
 logger = logging.getLogger('croffle')
 
 def group_checks(user):
-    print(user.groups.filter(name='can_make_proj').exists())
     return user.groups.filter(name='can_make_proj').exists()
 
 def group_check(user):

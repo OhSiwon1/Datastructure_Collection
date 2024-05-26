@@ -9,7 +9,7 @@
     {% endfor %}
     </div>
     {% endif %}
-<div class="container px-5">
+<div class="container-fluid px-5">
     <div class="container px-5">
     <h5 class="my-3 border-bottom pb-2">프로젝트 등록</h5>
     <form method="post" enctype="multipart/form-data">
@@ -55,48 +55,68 @@
             <select name="year" class="form-control" required id="id_year">
             <option value="" selected>---------</option>
             {% for year in year_list %}
+            {% if project.year == year %}
+            <option value="{{year.id}}" selected>{{year.year}}</option>
+            {%else%}
             <option value="{{year.id}}">{{year.year}}</option>
+            {%endif%}
             {% endfor %}
             </select>
             </div>
             </div>
-    
-            <div class="form-group row mb-4">
-            <label class="col-sm-2 col-form-label">프로젝트 사진:</label> 
-            <div class="col-sm-10">
-            <input type="file" class="form-control" required name="imgfile" id="imgfile">
-            </div>
-            </div>
-
-            <div class="form-group row mb-4">
-            <label class="col-sm-2 col-form-label">포스터:</label> 
-            <div class="col-sm-10">
-            <input type="file" required class="form-control" name="poster" id="poster">
-            </div>
-            </div>
-        
-            <div class="form-group row mb-4">
-            <label class="col-sm-2 col-form-label">최종보고서:</label> 
-            <div class="col-sm-10">
-            <input type="file" class="form-control" name="repoter" id="repoter">
-            </div>
+            
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group row mb-4">
+                <label class="col-sm-4 col-form-label">프로젝트 사진:</label> 
+                <div class="col-sm-8">
+                <input type="file" class="form-control" required name="imgfile" id="imgfile" value="{{project.imgfile}}">
+                </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group row mb-4">
+                <label class="col-sm-4 col-form-label">포스터:</label> 
+                <div class="col-sm-8">
+                <input type="file" required class="form-control" name="poster" id="poster" value="{{project.poster}}">
+                </div>
+                </div>
+              </div>
             </div>
 
-            <div class="form-group row mb-4">
-            <label class="col-sm-2 col-form-label">프로젝트 파일: </label>
-            <div class="col-sm-10">
-            <input type="file" required class="form-control" name="uploadedFile" id="uploadedFile">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group row mb-4">
+                <label class="col-sm-4 col-form-label">최종보고서:</label> 
+                <div class="col-sm-8">
+                <input type="file" class="form-control" name="repoter" id="repoter"value="{{project.repoter}}">
+                </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group row mb-4">
+                <label class="col-sm-4 col-form-label">프로젝트 파일: </label>
+                <div class="col-sm-8">
+                <input type="file" required class="form-control" name="uploadedFile" id="uploadedFile" value="{{project.uploadedFile}}">
+                </div>
+                </div>
+              </div>
             </div>
-            </div>
-
             <div class="form-group row mb-4">
                 <label class="col-sm-2 col-form-label">해시태그:</label> 
                 <div class="col-sm-10">
                     {%for hashtag in hashtag_list%}
-                    <input name="hashtag" class="form-check-input" type="checkbox" value="{{hashtag.id}}" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
+                    {% if hashtag in project.hashtag.all %}
+                    <input checked name="hashtag" class="form-check-input" type="checkbox" value="{{hashtag.id}}" id="defaultCheck1">
+                    <label class="form-check-label me-4" for="defaultCheck1">
                       {{hashtag.content}}
                     </label>
+                    {%else%}
+                    <input name="hashtag" class="form-check-input" type="checkbox" value="{{hashtag.id}}" id="defaultCheck1">
+                    <label class="form-check-label me-4" for="defaultCheck1">
+                      {{hashtag.content}}
+                    </label>
+                    {%endif%}        
                     {%endfor%}
                 </div>
                 </div>

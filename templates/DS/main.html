@@ -26,10 +26,10 @@
   <div class="album py-4" style="background-color: #F9F7F0;">
     <div class="container px-2">
 
-      <div class="row">
-        <div class="col-8">
+      <div class="row g-0">
+        <div class="col-sm-6 col-md-8">
           {%for year in year_list%}
-          <div class="mb-4">
+          <div class="container mb-4">
             <div class="p-1 mb-4 text-white rounded-pill" style="background-color:#178CA4;">
               <a href="{% url 'byyears' year.year_id %}" class="year px-2">{{year.year}}</a>
             </div>
@@ -47,14 +47,20 @@
                       <a href="/{{ project.id }}/" style="text-decoration: none; color: black;">
                         <h5 class="navlink">{{ project.title }}</h5>
                       </a>
-                      <p class = "card-text">{{ project.abstract }}</p>
+                      <p class="hi">{{ project.abstract }}</p>
                     </div>
                     <div class="card-footer">
-                      {{project.author.username}} ({{project.author.number}})
-                        <div style="float: right;">
-                          {{project.harts.count}}
-                          <img src="{% static 'heart.svg' %}" style="height: 25px; width: 25px;">
+                      <div class="row">
+                        <div class="col-8">
+                          <div class="hiii">{{project.member}}</div>
                         </div>
+                        <div class="col-4" style="font-size: 80%; padding: 0;">
+                          <div style="float: right; padding-right: 6px;">
+                            {{project.harts.count}}
+                            <img src="{% static 'heart.svg' %}" style="height: 15px; width: 15px;">
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -66,7 +72,7 @@
 
         </div>  
 
-        <div class="col-4">
+        <div class="col-sm-6 col-md-4 container">
           <div class="p-1 mb-4 text-white rounded-pill" style="background-color:#178CA4;">
             <a href="{%url 'makeit:index'%}" class="year px-2">&lt만들어주세요!&gt</a>
           </div>
