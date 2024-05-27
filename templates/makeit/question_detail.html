@@ -1,18 +1,39 @@
+
 {% extends "base.html" %}
+{%block title%}{{question.subject}}{% endblock %}
+
 {% block content %}
 
 <div class="container my-3">
     <!-- 질문 -->
     <h2 class="py-2">{{ question.subject }}</h2>
+    <div class="px-3">
+      글쓴이: {{question.author}}({{question.author.number}})
+      <br>
+      좋아요: <span class="badge rounded-pill" style="background-color: #18b7be;">{{question.voter.count}}</span>  
+    </div>
     <hr class="line">
+    <div class="px-3">
       <div style="background-color: #18b6be35; border-radius: 20px;">
         <div class="px-4 py-3" style="white-space: pre-line;">{{ question.content }}</div>
             <div class="d-flex justify-content-end">
                 <div class="px-4 text-dark p-2">
                     작성일: {{ question.create_date }}
                 </div>
-            </div>
-    </div>
+            </div>    </div>
+    <div class="py-1">
+    {% if request.user == question.author %}
+    <a href="{% url 'makeit:question_modify' question.id  %}" 
+      class="btn btn-sm btn-outline-secondary">수정</a>
+    <a onclick="del(this)" data-uri="{% url 'makeit:question_delete' question.id  %}" 
+      class="btn btn-sm btn-outline-secondary">삭제</a>
+    <a href="javascript:void(0)"  onclick="vote(this)" data-uri="{% url 'makeit:question_vote' question.id  %}" class="btn btn-sm btn-outline-secondary">
+      좋아요
+    </a>
+    {% endif %}
+  </div>
+</div>
+
     <!-- 답변 -->
     <hr class="line"> 
     <h5 class="my-3 py-2">{{question.answer_set.count}}개의 답변이 있습니다.</h5>
@@ -21,7 +42,7 @@
         <div class="card-body">
           <div class="d-flex flex-start">
             <img class="rounded-circle shadow-1-strong me-3"
-              src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(21).webp" alt="avatar" width="40"
+              src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Profile_photo_placeholder_square.svg" alt="avatar" width="40"
               height="40" />
             <div class="w-100">
               <div class="d-flex justify-content-between align-items-center mb-3">
@@ -33,7 +54,6 @@
               </div>
               <div class="d-flex justify-content-between align-items-center">
                 <p class="small mb-0" style="color: #aaa;">
-                  {{answer.id}}
                   {%if answer.author == request.user %}
                   <a href="javascript:void(0)"  onclick="del(this)" data-uri="{% url 'makeit:answer_delete' answer.id  %}" class="link-grey">Remove</a>
                   {%endif%}

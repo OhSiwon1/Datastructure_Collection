@@ -1,8 +1,24 @@
 {% extends "base.html" %}
+{%block title%}만들어주세요!{% endblock %}
+
 {% load makeit_filter %}
 {% block content %}
 
 <div class="container my-3 py-3">
+    <div class="row my-3">
+        <div class="col-6">
+            <a href="{% url 'makeit:question_create' %}" class="btn btn-outline-secondary">질문 등록하기</a>
+        </div>
+        <div class="col-6">
+            <div class="input-group">
+                <input type="text" id="search_kw1" class="form-control" value="{{ kw1|default_if_none:'' }}" placeholder="검색">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" name="btn_search1" id="btn_search1"style="z-index: 0;">찾기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <table class="table">
         <thead>
         <tr class="table-info">
@@ -39,8 +55,9 @@
             <!-- 이전페이지 -->
             {% if question_list.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ question_list.previous_page_number }}">이전</a>
-            </li>
+                <a class="page-link" data-page="{{ question_list.previous_page_number }}"
+                href="javascript:void(0)">이전</a>
+                 </li>
             {% else %}
             <li class="page-item disabled">
                 <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
@@ -51,20 +68,23 @@
             {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
             {% if page_number == question_list.number %}
             <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-            </li>
+                <a class="page-link" data-page="{{ page_number }}"
+                href="javascript:void(0)">{{ page_number }}</a>
+                 </li>
             {% else %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-            </li>
+                <a class="page-link" data-page="{{ page_number }}"
+                href="javascript:void(0)">{{ page_number }}</a>
+                 </li>
             {% endif %}
             {% endif %}
             {% endfor %}
             <!-- 다음페이지 -->
             {% if question_list.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ question_list.next_page_number }}">다음</a>
-            </li>
+                <a class="page-link" data-page="{{ question_list.next_page_number }}"
+                href="javascript:void(0)">다음</a>
+                 </li>
             {% else %}
             <li class="page-item disabled">
                 <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
@@ -72,7 +92,27 @@
             {% endif %}
         </ul>
         <!-- 페이징처리 끝 -->
-    <a href="{% url 'makeit:question_create' %}" class="btn btn-outline-secondary" style="float: right;">질문 등록하기</a>
 </div>
+<form id="searchForm1" method="get" action="{% url 'makeit:index' %}">
+    <input type="hidden" id="kw1" name="kw1" value="{{ kw1|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
 
+<script type='text/javascript'>
+const page_elements = document.getElementsByClassName("page-link");
+Array.from(page_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        document.getElementById('page').value = this.dataset.page;
+        document.getElementById('searchForm1').submit();
+    });
+});
+const btn_search = document.getElementById("btn_search1");
+btn_search.addEventListener('click', function() {
+    document.getElementById('kw1').value = document.getElementById('search_kw1').value;
+    document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+    document.getElementById('searchForm1').submit();
+});
+</script>
 {% endblock %}
+
+

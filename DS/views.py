@@ -28,7 +28,7 @@ def main(request):
     year_list=[]
     for yea in Year.objects.all():
         year_list.append({'year':yea.year,'year_id':yea.id,'queryset':yea.project_set.annotate(like_count=Count('harts')).order_by('-like_count')[:3]})
-    question_list=Question.objects.order_by()
+    question_list=Question.objects.order_by()[:17]
     context1={'year_list':year_list,'question_list':question_list}
     return render(request, 'DS/main.html', context1)
 

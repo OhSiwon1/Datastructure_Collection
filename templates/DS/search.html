@@ -17,14 +17,17 @@
                 {% if project.imgfile %}
                 <img class="card-img-top" src="{{ project.imgfile.url }}" style="height: 200px; width: 100%;">
                 {% else %}
-                <img class="card-img-top" data-src="" style="height: 220px; width: 100%;">
+                <img class="card-img-top" src="{{ project.poster.url }}" style="height: 200px; width: 100%;">
                 {% endif %}
                 <div class="card-body" style="height: 150px;">
                 <a href="/{{ project.id }}/" style="text-decoration: none; color: black;">
                     <h5 class="navlink"style="color:#072A40;">{{ project.title }}</h5>
                 </a>
-                <p class = "card-text">{{project.abstract}}</p>
-                </div>
+                {% if project.imgfile %}
+                <p class = "hi">{{project.abstract}}</p>
+                {% else %}
+                <p class="hi">이 프로젝트는 {{ project.year.year }}에 개발된 프로젝트로 우수한 퀄리티를 통해, 끝내주는 자료구조 과목을 빛냄.</p>
+                {% endif %}                </div>
                 <div class="card-footer">
                 {{project.author.username}} ({{project.author.number}})
                     <div style="float: right;">

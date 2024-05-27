@@ -41,13 +41,17 @@
                     {% if project.imgfile %}
                     <img class="card-img-top" src="{{ project.imgfile.url }}" style="height: 150px; width: 100%;">
                     {% else %}
-                    <img class="card-img-top" data-src="" style="height: 150px; width: 100%;">
+                    <img class="card-img-top" src="{{ project.poster.url }}" style="height: 150px; width: 100%;">
                     {% endif %}
                     <div class="card-body" style="height: 150px;">
                       <a href="/{{ project.id }}/" style="text-decoration: none; color: black;">
                         <h5 class="navlink"style="color:#072A40;">{{ project.title }}</h5>
                       </a>
+                      {% if project.imgfile %}
                       <p class="hi">{{ project.abstract }}</p>
+                      {% else %}
+                      <p class="hi">이 프로젝트는 {{ project.year.year }}에 개발된 프로젝트로 우수한 퀄리티를 통해, 자료구조 과목을 빛냄.</p>
+                      {% endif %}
                     </div>
                     <div class="card-footer">
                       <div class="row">
@@ -74,7 +78,7 @@
 
         <div class="col-sm-6 col-md-4 container px-4">
           <div class="p-1 mb-4 text-white rounded-pill" style="background-color:#178CA4;">
-            <a href="{%url 'makeit:index'%}" class="year px-2">&lt만들어주세요!&gt</a>
+            <a href="{% url 'makeit:index' %}" class="year px-2">&lt만들어주세요!&gt</a>
           </div>
           <table class="table">
             <thead>
@@ -92,6 +96,44 @@
             </tr>
             {% endfor %}
           </table>
+          <div class="p-1 mb-4 text-white rounded-pill" style="background-color:#178CA4;">
+            <a href="#" class="year px-2">&lt명예의 전당&gt</a>
+          </div>
+          <div class="commentcard mb-3">
+            <div class="card-body">
+              <div class="d-flex flex-start">
+                <img class="rounded-circle shadow-1-strong me-3"
+                  src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Profile_photo_placeholder_square.svg" alt="avatar" width="40"
+                  height="40" />
+                <div class="w-100">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="text-primary mb-0">
+                      <b>최시원(23-117)</b>
+                      <span class="text-body ms-2">Croffle</span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="commentcard mb-3">
+          <div class="card-body">
+            <div class="d-flex flex-start">
+              <img class="rounded-circle shadow-1-strong me-3"
+                src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Profile_photo_placeholder_square.svg" alt="avatar" width="40"
+                height="40" />
+              <div class="w-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h6 class="text-primary mb-0">
+                    <b>이준민(23-091)</b>
+                    <span class="text-body ms-2">idea 아카이브</span>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
         </div>
       </div>
 
