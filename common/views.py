@@ -33,9 +33,9 @@ def page_not_found(request, exception):
 def profile_view(request,user_id):
     Users=User.objects.get(id=user_id)
     if Users.author_project.all():
-        context={'user':Users, 'project':Users.author_project.all()[0]}
+        context={'use':Users, 'project':Users.author_project.all()[0]}
     else:
-        context={'user':Users}
+        context={'use':Users}
     return render(request, 'common/profile.html', context)
 
 @login_required(login_url='common:login')
@@ -48,5 +48,5 @@ def profile_create(request,user_id):
         Users.profile=request.FILES.get('profileimage')
         print(request.FILES.get('profileimage'))
         Users.save()
-    context = {'user': Users}
+    context = {'use': Users}
     return render(request, 'common/create_profile.html', context)

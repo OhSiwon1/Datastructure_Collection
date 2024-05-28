@@ -11,18 +11,18 @@
         <div class="card-body p-4">
           <div class="d-flex">
             <div class="flex-shrink-0">
-              <img src="{{user.profile.url}}" class="rounded-circle shadow-1-strong me-3" alt="avatar" width="300" height="300" style="border: 2px solid #072A40;"/>
+              <img src="{{use.profile.url}}" class="rounded-circle shadow-1-strong me-3" alt="avatar" width="300" height="300" style="border: 2px solid #072A40;"/>
               {% if request.user == user %}
               <p><input type="button" value="사진변경" onclick="new_window(this);" data-uri="{% url 'common:profile_create' user.id %}"></p>
               {% endif %}
             </div>
             <div class="flex-grow-1 ms-3">
-              <h5 class="mb-1">{{user.number}}</h5>
-              <p class="mb-2 pb-1">학번: {{user.username}}</p>
+              <h5 class="mb-1">{{use.number}}</h5>
+              <p class="mb-2 pb-1">학번: {{use.username}}</p>
               <div class="d-flex justify-content-start rounded-3 p-2 mb-2 " style="background-color: #96abb077; border-radius: 10px;">
                 <div class="pb-1 px-2">
                   <p class="small text-muted mb-1">이메일:</p>
-                  <p class="mb-0">{{user.email}}</p>
+                  <p class="mb-0">{{use.email}}</p>
                 <div class="py-2">
                   <p class="small text-muted mb-1">프로젝트:</p>
                   {%if project%}
