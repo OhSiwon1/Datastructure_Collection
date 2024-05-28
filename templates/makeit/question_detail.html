@@ -31,10 +31,10 @@
       class="btn btn-sm btn-outline-secondary">수정</a>
     <a onclick="del(this)" data-uri="{% url 'makeit:question_delete' question.id  %}" 
       class="btn btn-sm btn-outline-secondary">삭제</a>
+    {% endif %}
     <a href="javascript:void(0)"  onclick="vote(this)" data-uri="{% url 'makeit:question_vote' question.id  %}" class="btn btn-sm btn-outline-secondary">
       좋아요
     </a>
-    {% endif %}
   </div>
 </div>
 
