@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}명예의 쩐당{% endblock %}
+
+{% block content %}
+<div class="container px-5 py-5">
+    <h1>명예의 쩐당</h1>
+    <hr class="line">
+  <div class="row row-cols-2">
+    {%for member in user_list%}
+        <div class="col py-4" style="display: flex; flex-direction: column; align-items: center;">
+            <img class="rounded-circle shadow-1-strong me-3"
+            src="{{member.profile.url}}" alt="avatar" width="400" height="400" style="border: 1px solid #178CA4;"/>
+            <a class="usernamel py-2" href="{% url 'common:profile' member.id %}" style="text-align: center;">
+                <h5 class="text-primary mb-0">{{ member.number }}({{ member.username }})</h5>
+            </a>
+        </div>
+    {%endfor%}
+  </div>
+  <hr class="line">
+
+  <div class="py-2" style="text-align: center; margin-bottom: 14px;">
+    <a href="{%url 'main'%}" class="btn btn-outline-secondary" style="width:200px;">홈으로</a>
+  </div>
+
+</div>
+
+{% endblock %}

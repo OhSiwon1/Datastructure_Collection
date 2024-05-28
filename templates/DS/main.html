@@ -97,42 +97,27 @@
             {% endfor %}
           </table>
           <div class="p-1 mb-4 text-white rounded-pill" style="background-color:#178CA4;">
-            <a href="#" class="year px-2">&lt명예의 전당&gt</a>
+            <a href="{%url 'good'%}" class="year px-2">&lt명예의 쩐당&gt</a>
           </div>
+          {%for member in user_list%}
           <div class="commentcard mb-3">
             <div class="card-body">
               <div class="d-flex flex-start">
                 <img class="rounded-circle shadow-1-strong me-3"
-                  src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Profile_photo_placeholder_square.svg" alt="avatar" width="40"
+                  src="{{member.profile.url}}" alt="avatar" width="40" style="border: 1px solid #178CA4;"
                   height="40" />
                 <div class="w-100">
                   <div class="d-flex justify-content-between align-items-center mb-3">
                     <h6 class="text-primary mb-0">
-                      <b>최시원(23-117)</b>
-                      <span class="text-body ms-2">Croffle</span>
+                      <a class="usernamel" href="{%url 'common:profile' member.id%}">{{member.number}}({{member.username}})</a>
                     </h6>
                   </div>
                 </div>
               </div>
             </div>
         </div>
-        <div class="commentcard mb-3">
-          <div class="card-body">
-            <div class="d-flex flex-start">
-              <img class="rounded-circle shadow-1-strong me-3"
-                src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Profile_photo_placeholder_square.svg" alt="avatar" width="40"
-                height="40" />
-              <div class="w-100">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <h6 class="text-primary mb-0">
-                    <b>이준민(23-091)</b>
-                    <span class="text-body ms-2">idea 아카이브</span>
-                  </h6>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
+        {%endfor%}
+
 
         </div>
       </div>

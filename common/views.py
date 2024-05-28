@@ -2,7 +2,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import logout,authenticate, login
 from common.forms import UserForm
 from django.contrib.auth.decorators import login_required
-
+from common.models import User
+from django.contrib import messages
 
 # Create your views here.
 def logout_view(request):
@@ -24,21 +25,28 @@ def signup_view(request):
     return render(request, 'common/signup.html', {'form': form})
 
 
+
 def page_not_found(request, exception):
     return render(request, 'common/404.html', {})
 
 @login_required(login_url='common:login')
-def profile_view(request):
-    User=request.user
-    context={'user':User}
+def profile_view(request,user_id):
+    Users=User.objects.get(id=user_id)
+    if Users.author_project.all():
+        context={'user':Users, 'project':Users.author_project.all()[0]}
+    else:
+        context={'user':Users}
     return render(request, 'common/profile.html', context)
 
 @login_required(login_url='common:login')
-def profile_create(request):
-    User=request.user
+def profile_create(request,user_id):
+    Users=User.objects.get(id=user_id)
+    if request.user != Users:
+        messages.error(request, '수정권한이 없습니다')
+        return redirect('main')
     if request.method == "POST":
-        User.profile=request.FILES.get('profileimage')
+        Users.profile=request.FILES.get('profileimage')
         print(request.FILES.get('profileimage'))
-        User.save()
-    context = {'user': User}
+        Users.save()
+    context = {'user': Users}
     return render(request, 'common/create_profile.html', context)

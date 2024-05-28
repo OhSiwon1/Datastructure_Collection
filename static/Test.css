@@ -204,3 +204,20 @@ a:active{
     border-radius: 50% / 0 0 40% 40%;
     background: white;
   }
+
+
+  .username{
+    color: #18b7be;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .username:hover{
+    color: #18b7be;
+    font-weight: 800;
+  }
+
+  .usernamel{
+    color: #072A40;
+    text-decoration: none;
+    font-weight: 700;
+  }

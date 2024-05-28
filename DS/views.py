@@ -7,6 +7,7 @@ from makeit.models import Question
 from django.db.models import Count
 from django.db.models import Q
 import logging
+from common.models import User
 logger = logging.getLogger('croffle')
 
 def group_checks(user):
@@ -20,6 +21,10 @@ def videourl(img_element_url):
     video_id = video_id.split("v=")[-1].split("&")[0]
     embed_url = f"https://www.youtube.com/embed/{video_id}"
     return embed_url
+def good_view(request):
+    gooduser=User.objects.filter(groups__name='can_make_proj')
+    context1={'user_list':gooduser}
+    return render(request, 'DS/good.html', context1)
 
 
 # Create your views here.
@@ -29,7 +34,8 @@ def main(request):
     for yea in Year.objects.all():
         year_list.append({'year':yea.year,'year_id':yea.id,'queryset':yea.project_set.annotate(like_count=Count('harts')).order_by('-like_count')[:3]})
     question_list=Question.objects.order_by()[:17]
-    context1={'year_list':year_list,'question_list':question_list}
+    gooduser=User.objects.filter(groups__name='can_make_proj')
+    context1={'year_list':year_list,'question_list':question_list,'user_list':gooduser}
     return render(request, 'DS/main.html', context1)
 
 def Hashtag_view(request,hashtag_id):
@@ -89,9 +95,6 @@ def project_create(request):
 @login_required(login_url='common:login')
 def project_modify(request, project_id):
     project = Project.objects.get(id=project_id)
-    if request.user != project.author:
-        messages.error(request, '수정권한이 없습니다')
-        return redirect('project_detail', project_id=project.id)
     if request.method == "POST":
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():

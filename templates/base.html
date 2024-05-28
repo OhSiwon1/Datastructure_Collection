@@ -92,7 +92,7 @@
         <div class="offcanvas-footer" style="color:#072A40; border-top: solid 1px #072A40;">
           <div class="px-3 py-4">
             {% if user.is_authenticated %}
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Profile_photo_placeholder_square.svg" width="40" height="40" class="rounded-circle">
+            <img src="{{request.user.profile.url}}" width="40" height="40" class="rounded-circle" style="border:1px solid #072A40;">
             <!-- Default dropup button -->
             <div class="btn-group dropup">
               <button type="button" class="btnss dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -100,6 +100,7 @@
               </button>
               <ul class="dropdown-menu">
                 <!-- Dropdown menu links -->
+                <li><a class="dropdown-item" style="border-bottom: 1px solid #072A40;" href="{% url 'common:profile' request.user.id %}">프로필</a></li>
                 <li><a class="dropdown-item" href="{% url 'makeit:question_create' %}">질문 등록</a></li>
                 <li><a class="dropdown-item" href="{% url 'project_create' %}">프로젝트 등록</a></li>
                 <li><a class="dropdown-item" href="{% url 'common:logout' %}">로그아웃</a></li>

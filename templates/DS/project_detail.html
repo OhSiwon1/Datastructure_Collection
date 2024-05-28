@@ -178,13 +178,13 @@
           <div class="card-body">
             <div class="d-flex flex-start">
               <img class="rounded-circle shadow-1-strong me-3"
-                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(21).webp" alt="avatar" width="40"
+                src="{{comment.author.profile.url}}" alt="avatar" width="40"
                 height="40" />
               <div class="w-100">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <h6 class="text-primary mb-0">
-                    <b>{{comment.author}}</b>
-                    <span class="text-body ms-2">{{comment.content}}</span>
+                    <a class="username"href="{% url 'common:profile' comment.author.id %}">{{comment.author.number}}({{comment.author.username}})</a>
+                    <span class="text-body ms-2" style="font-weight: 400;">{{comment.content}}</span>
                   </h6>
                   <p class="mb-0"></p>
                 </div>
