@@ -1,0 +1,13 @@
+<form id="myForm" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input required type="file" class="form-control" name="profileimage" id="profile">
+    <button onclick="submitAndClose()" class="btn btn-outline-secondary" style="width:200px;">저장하기</button>
+</form>
+<script>
+function submitAndClose() {
+    // 폼을 제출
+    document.getElementById('myForm').submit();
+    setTimeout("window.close()", 50);
+}
+
+</script>

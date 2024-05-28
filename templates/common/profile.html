@@ -1,0 +1,22 @@
+
+{% extends 'base.html' %}
+{% block title %}{{user.number}}{% endblock %}
+
+{% block content %}
+<img src="{{user.profile.url}}"/>
+<p><input type="button" value="New Window" onclick="new_window(this);" data-uri="{% url 'common:profile_create' %}"></p>
+
+
+{% endblock %}
+
+{% block script %}
+<script type='text/javascript'>
+function new_window(el) {
+    window.open(
+      el.dataset.uri,
+      "Image",
+      "width=400, height=300, top=50, left=50"
+    );
+  }
+    </script>
+{% endblock %}

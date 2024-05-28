@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import logout,authenticate, login
 from common.forms import UserForm
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def logout_view(request):
@@ -24,3 +26,19 @@ def signup_view(request):
 
 def page_not_found(request, exception):
     return render(request, 'common/404.html', {})
+
+@login_required(login_url='common:login')
+def profile_view(request):
+    User=request.user
+    context={'user':User}
+    return render(request, 'common/profile.html', context)
+
+@login_required(login_url='common:login')
+def profile_create(request):
+    User=request.user
+    if request.method == "POST":
+        User.profile=request.FILES.get('profileimage')
+        print(request.FILES.get('profileimage'))
+        User.save()
+    context = {'user': User}
+    return render(request, 'common/create_profile.html', context)
