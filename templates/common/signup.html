@@ -8,7 +8,7 @@
         {% csrf_token %}
         {% include "form_errors.html" %}
         <div class="mb-3">
-            <label for="username">사용자 이름</label>
+            <label for="username">학번</label>
             <input type="text" class="form-control" name="username" id="username"
                    value="{{ form.username.value|default_if_none:'' }}">
         </div>
@@ -28,7 +28,7 @@
                    value="{{ form.email.value|default_if_none:'' }}">
         </div>
         <div class="mb-3">
-            <label for="number">학번</label>
+            <label for="number">이름</label>
             <input type="text" class="form-control" name="number" id="number"
                    value="{{ form.number.value|default_if_none:'' }}">
         </div>

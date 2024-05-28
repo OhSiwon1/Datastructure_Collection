@@ -29,7 +29,7 @@
                 <p class="hi">이 프로젝트는 {{ project.year.year }}에 개발된 프로젝트로 우수한 퀄리티를 통해, 끝내주는 자료구조 과목을 빛냄.</p>
                 {% endif %}                </div>
                 <div class="card-footer">
-                {{project.author.username}} ({{project.author.number}})
+                {{project.member}}
                     <div style="float: right;">
                     {{project.harts.count}}
                     <img src="{% static 'heart.svg' %}" style="height: 25px; width: 25px;">

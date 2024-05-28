@@ -74,6 +74,12 @@ def project_create(request):
             project.author = request.user
             project.video = videourl(project.video)
             project.save()
+            Hashtag_list=request.POST.getlist("hashtag")
+            for word in Hashtag_list:
+                hashtag, created = Hashtag.objects.get_or_create(content=word)
+                print(hashtag.id)
+                project.hashtag.add(hashtag)
+            project.save()
             return redirect('main')
     else:
         form = ProjectForm()
@@ -89,7 +95,13 @@ def project_modify(request, project_id):
     if request.method == "POST":
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
+            project.video = videourl(project.video)
             form.save()
+            project.hashtag.clear()
+            Hashtag_list=request.POST.getlist("hashtag")
+            for word in Hashtag_list:
+                hashtag, created = Hashtag.objects.get_or_create(content=word)
+                project.hashtag.add(hashtag)
             return redirect('project_detail', project_id=project.id)
     else:
         form = ProjectForm(instance=project)

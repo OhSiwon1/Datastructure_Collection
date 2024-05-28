@@ -16,14 +16,14 @@ class Hashtag(models.Model):
 
 class Project(models.Model):
     title=models.CharField(max_length=100)
-    content=models.TextField(blank=True)
+    content=models.TextField(blank=True,default="")
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_project')
     year=models.ForeignKey(Year,on_delete=models.CASCADE)
     uploadedFile = models.FileField(upload_to="zipfile/",null=True)
     harts = models.ManyToManyField(User, related_name='hart_project',blank=True)
     video=models.URLField()
     imgfile = models.ImageField(null=True, upload_to="")
-    abstract=models.CharField(max_length=100,blank=True)
+    abstract=models.CharField(max_length=100,blank=True,default="")
     hashtag=models.ManyToManyField(Hashtag,related_name='project_hashtag',blank=True)
     member=models.CharField(max_length=100)
     poster=models.FileField(upload_to="paperfile/",null=True)
