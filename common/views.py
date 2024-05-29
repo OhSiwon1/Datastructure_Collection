@@ -48,5 +48,6 @@ def profile_create(request,user_id):
         Users.profile=request.FILES.get('profileimage')
         print(request.FILES.get('profileimage'))
         Users.save()
+        return redirect('common:profile', Users.id)
     context = {'use': Users}
     return render(request, 'common/create_profile.html', context)
