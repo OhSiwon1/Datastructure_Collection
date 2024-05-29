@@ -37,7 +37,7 @@
               <div class="row row-cols-1 row-cols-md-3">
                 {% for project in year.queryset %}
                 <div class="col-mb-4 py-1">
-                  <div class="card">
+                  <div class="card" style="border: 2px solid #178ca477;">
                     {% if project.imgfile %}
                     <img class="card-img-top" src="{{ project.imgfile.url }}" style="height: 150px; width: 100%;">
                     {% else %}
