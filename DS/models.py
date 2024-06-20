@@ -43,3 +43,8 @@ class Comment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+def year_lists(request):
+    years = Year.objects.all()  # 필요한 데이터를 쿼리합니다
+    return {'year_lists': years}

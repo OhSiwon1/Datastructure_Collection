@@ -38,9 +38,9 @@
     
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 px-3">
               <b><a href="{% url 'makeit:index' %}" class="navlink px-2">&lt만들어주세요!&gt</a></b>
-              <b><a href="{% url 'byyears' 1 %}" class="navlink px-2">2023-1</a></b>
-              <b><a href="{% url 'byyears' 2 %}" class="navlink px-2">2023-2</a></b>
-              <b><a href="{% url 'byyears' 3 %}" class="navlink px-2">2024-1</a></b>
+              {%for year in year_lists%}
+              <b><a href="{% url 'byyears' year.id %}" class="navlink px-2">{{year.year}}</a></b>
+              {%endfor%}            
             </ul>
             <form class="d-flex" role="search" id="searchForm" method="get" action="{% url 'search' %}">
               <input style="background-color: #F9F7F0;" class="form-control me-2" type="text" id="kw" name="kw" placeholder="프로젝트 검색" id="search_kw" value="{{ kw|default_if_none:'' }}">
@@ -62,9 +62,9 @@
     
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 px-3">
               <b><a href="{% url 'makeit:index' %}" class="navlink px-2">&lt만들어주세요!&gt</a></b>
-              <b><a href="{% url 'byyears' 1 %}" class="navlink px-2">2023-1</a></b>
-              <b><a href="{% url 'byyears' 2 %}" class="navlink px-2">2023-2</a></b>
-              <b><a href="{% url 'byyears' 3 %}" class="navlink px-2">2024-1</a></b>
+              {%for year in year_lists%}
+              <b><a href="{% url 'byyears' year.id %}" class="navlink px-2">{{year.year}}</a></b>
+              {%endfor%}
             </ul>
             <form class="d-flex" role="search" id="searchForm" method="get" action="{% url 'search' %}">
               <input style="background-color: #F9F7F0;" class="form-control me-2" type="text" id="kw" name="kw" placeholder="프로젝트 검색" id="search_kw" value="{{ kw|default_if_none:'' }}">
@@ -84,9 +84,9 @@
         <div class="offcanvas-body" style="color:#072A40">
           <div class="container px-3 py-3">
           <p class="py-1"><a href="{% url 'makeit:index' %}" class="offcanvaslink px-2">&lt만들어주세요!&gt 게시판</a></p>
-          <p class="py-1"><a href="{% url 'byyears' 1 %}" class="offcanvaslink px-2">2023-1 산출물</a></p>
-          <p class="py-1"><a href="{% url 'byyears' 2 %}" class="offcanvaslink px-2">2023-2 산출물</a></p>
-          <p class="py-1"><a href="{% url 'byyears' 3 %}" class="offcanvaslink px-2">2024-1 산출물</a></p>
+          {%for year in year_lists%}
+          <p class="py-1"><a href="{% url 'byyears' year.id %}" class="offcanvaslink px-2">{{year.year}}</a></p>
+          {%endfor%}
           <p class="py-1"><a href="{% url 'project_create' %}"class="offcanvaslink px-2">프로젝트 등록</a></p>
           </div>
         </div>
